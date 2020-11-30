@@ -43,31 +43,36 @@ class ShopsController extends Controller
        
        
     }
-    public function show(){
+    public function show($id){
         
-    }
-    public function edit(){
-        //Myshopについての記載
         $data = [];
-        if (\Auth::check()){
+        if ((Shop::findOrFail($id)->user())===\Auth::user()){
             
             // 認証済みの場合
             // 認証済みユーザを取得
             $user = \Auth::user();
             // ユーザのshopの一覧を作成日時の降順で取得
-            $shops = $user->shops()->orderBy('created_at', 'desc')->get();
+            $shop = $user->shops()->orderBy('created_at', 'desc')->get();
 
             $data = [
                 'user' => $user,
-                'shops' => $shops,
+                'shop' => $shop,
             ];
+            return view('shops.user_show',$data);
         
         
-        }
+         }else{
+            $shop = Shop::findOrFail($id);
 
-
-        // shops.editビューでそれらを表示
-        return view('shops.edit', $data);
+         // メッセージ詳細ビューでそれを表示
+         return view('shops.show', [
+            'shop' => $shop,
+         ]);
+         }
+    } 
+    
+    public function edit(){
+        
         
         
     }
