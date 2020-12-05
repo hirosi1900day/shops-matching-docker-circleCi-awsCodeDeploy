@@ -26,9 +26,9 @@
    {!! Form::open(['route' => ['chat.store', $chat_room_id], 'method' => 'post']) !!}
 
                 <div class="form-group">
-                    {!! Form::label('message', 'メッセージ:') !!}
-                    {!! Form::text('message', null, ['class' => 'form-control']) !!}
-                    {!! Form::hidden('chat_room_user', '$chat_room_user') !!}
+                    
+                    {!! Form::text('message', null, ['class' => 'form-control', 'placeholder'=>'messege']) !!}
+                    {!! Form::hidden('userId', $chat_room_user->id) !!}
                 </div>
 
     {!! Form::submit('送信', ['class' => 'btn btn-primary']) !!}

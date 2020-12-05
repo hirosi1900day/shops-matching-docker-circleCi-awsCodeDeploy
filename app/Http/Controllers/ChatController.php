@@ -23,16 +23,16 @@ class ChatController extends Controller
     
     public function show($id){
             
-   $matching_user_id = $id;
+    $matching_user_id = $id;
     
     // 自分の持っているチャットルームを取得
     $current_user_chat_rooms = Chatroomuser::where('user_id', Auth::id())
-    ->pluck('room_id');
+    ->pluck('chatroom_id');
 
     // 自分の持っているチャットルームからチャット相手のいるルームを探す
-    $chat_room_id = Chatroomuser::whereIn('room_id', $current_user_chat_rooms)
+    $chat_room_id = Chatroomuser::whereIn('chatroom_id', $current_user_chat_rooms)
         ->where('user_id', $matching_user_id)
-        ->pluck('room_id');
+        ->pluck('chatroom_id');
 
 
     // なければ作成する
@@ -46,11 +46,11 @@ class ChatController extends Controller
 
         // 新規登録 モデル側 $fillableで許可したフィールドを指定して保存
         Chatroomuser::create( 
-        ['room_id' => $chat_room_id,
+        ['chatroom_id' => $chat_room_id,
         'user_id' => Auth::id()]);
 
         Chatroomuser::create(
-        ['room_id' => $chat_room_id,
+        ['chatroom_id' => $chat_room_id,
         'user_id' => $matching_user_id]);
     }
 
@@ -65,7 +65,7 @@ class ChatController extends Controller
     // チャット相手のユーザー名を取得
     $chat_room_user_name = $chat_room_user->name;
 
-    $chat_messages = Chatmessage::where('room_id', $chat_room_id)
+    $chat_messages = Chatmessage::where('chatroom_id', $chat_room_id)
     ->orderby('created_at')
     ->get();
 
@@ -76,12 +76,12 @@ class ChatController extends Controller
     }
     public function store(Request $request,$id){
         Chatroom::findOrFail($id)->chatroom_message()->create([
-            'room_id'=>$id,
+            'chatroom_id'=>$id,
             'user_id'=>Auth::id(),
             'message'=>$request->message,
             ]);
     
-       $messageUserId=$request->chat_room_user;
+       $messageUserId=$request->id;
     
     
     return redirect(route('chat.show', ['id' => $messageUserId]));

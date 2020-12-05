@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
     
     public function message_chatrooms(){
-        return $this->belongToMany(Chatroom::class,'chatmessges','user_id','room_id');
+        return $this->belongToMany(Chatroom::class,'chatmessges','user_id','chatroom_id');
     }
     public function user_message(){
         return $this->hasMany(Chatmessage::class);

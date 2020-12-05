@@ -16,11 +16,11 @@ class Chatroomusers extends Migration
         Schema::create('chatroomusers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('chatroom_id');
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('room_id')->references('id')->on('chatrooms');
+            $table->foreign('chatroom_id')->references('id')->on('chatrooms');
         });
     }
 
