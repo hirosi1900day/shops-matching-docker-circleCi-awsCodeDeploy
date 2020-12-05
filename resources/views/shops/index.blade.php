@@ -5,7 +5,7 @@
     <h1>shop一覧</h1>
 
     @if (count($shops) > 0)
-     @foreach ($shops as $shop)
+     @foreach ($shops as $index=>$shop)
        <div class="row">
         <aside class="col-sm-4">
             <div class="card">
@@ -19,9 +19,11 @@
             </div>
         </aside>
         <div class="col-sm-8">
-              
+              <!--@php-->
+              <!--dd("{$shop_images}");-->
+              <!--@endphp-->
                 <ul class="nav nav-tabs nav-justified mb-3">
-                <li><img src="/uploads/{{ $shop->image_location }}" width="500" height="600"></li>
+                <li><img src="{{$shop_images}}" width="500" height="600"></li>
                 <li>{{$shop->name}}</li>
                 <li>{{$shop->shop_location_prefecture}}</li>
                 <li><{{$shop->free_time}}</li>
