@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chatmessage extends Model
 {
+     protected $fillable = ['room_id', 'user_id','message'];
     public function message_sending_user(){
         return $this->belongTo(User::class);
     }

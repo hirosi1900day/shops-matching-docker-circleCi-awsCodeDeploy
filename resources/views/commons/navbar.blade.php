@@ -22,8 +22,9 @@
                             {{-- ユーザ詳細ページへのリンク --}}
                      　      <li class="dropdown-item">{!! link_to_route('users.show', 'MyPage', ['user' => Auth::id()]) !!}</li>
                           　 {{-- 店舗作成へのリンク--}}
-                            <li class="dropdown-item">{!! link_to_route('shops.create', 'ショップ掲載',) !!}</li>
-</div>
+                            <li class="dropdown-item">{!! link_to_route('shops.create', 'ショップ作成',) !!}</li>
+                            <li class="dropdown-item">{!! link_to_route('mypage.shop', 'Myshop',) !!}</li>
+　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('shops.index', 'ショップ一覧',) !!}</li>
                             <li class="dropdown-divider"></li>
                             {{-- ログアウトへのリンク --}}
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>

@@ -18,6 +18,7 @@
                 <li><input type="text" value="{{$user->name}}" readonly></li>
                 <li><input type="textarea" value="{{$user->self_introduce}}" readonly></li>
             </ul>
+            if
             <a href="{{route('users.edit',['user'=>$user->id])}}">
                  <i class="fas fa-edit fa-2x"></i>
                  <span>情報を編集</span>

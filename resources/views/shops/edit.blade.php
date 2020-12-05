@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>登録ページ</h1>
-{!! Form::model($shops,['route'=>'shops.update','enctype'=>'multipart/form-data']) !!}
+{!! Form::model($shop,['route'=>['shops.update',$shop->id],'enctype'=>'multipart/form-data','method'=>'put']) !!}
 <div class='form-group'>
     {!! Form::label('name', '店舗名') !!}
     {!! Form::text('name',old('name'),['class'=>'form-control']) !!}

@@ -25,4 +25,13 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 Route::group(['middleware' => ['auth']], function () {
 Route::resource('users', 'UsersController');
 Route::resource('shops', 'ShopsController');
+Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
+
+});
+//chat
+Route::group(['middleware' => ['auth']], function () {
+ Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
+ Route::post('chat/{id}/store', 'ChatController@store')->name('chat.store');
+ Route::get('chat/createChatRoom', 'ChatController@createChatRoom')->name('chat.createChatRoom');
+ 
 });
