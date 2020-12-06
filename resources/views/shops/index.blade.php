@@ -23,7 +23,7 @@
               <!--dd("{$shop_images}");-->
               <!--@endphp-->
                 <ul class="nav nav-tabs nav-justified mb-3">
-                <li><img src="{{$shop_images}}" width="500" height="600"></li>
+                <li><img src="{{$shop_images[$index]}}" width="500" height="600"></li>
                 <li>{{$shop->name}}</li>
                 <li>{{$shop->shop_location_prefecture}}</li>
                 <li><{{$shop->free_time}}</li>

@@ -7,38 +7,49 @@ use App\Chatroom;
 use App\Chatroomuser;
 use App\Chatmessage;
 use App\User;
+use App\Shop;
 use Auth;
 
 
 class ChatController extends Controller
 {
-    //  public function create(){
-    //       $Chatroom = new Chatroom;
-
-    //     // メッセージ作成ビューを表示
-    //     return view('chat.show', [
-    //         'Chatroom' => $Chatroom,
-    //     ]);
-    //  }
     
+    public function index(){
+        
+        $current_user_chat_rooms = Chatroomuser::where('user_id', Auth::id())
+                                  ->pluck('chatroom_id');
+        foreach($current_user_chat_rooms as $index=>$current_user_chat_room){
+            $chat_room_names[$index]=Chatroom::findOrFail($current_user_chat_room)->name;
+        }
+       
+        
+        return view('chat.index',['chat_room_names'=>$chat_room_names]);
+    }
     public function show($id){
             
-    $matching_user_id = $id;
+        $matching_user_id = $id;
     
-    // 自分の持っているチャットルームを取得
-    $current_user_chat_rooms = Chatroomuser::where('user_id', Auth::id())
-    ->pluck('chatroom_id');
-
-    // 自分の持っているチャットルームからチャット相手のいるルームを探す
-    $chat_room_id = Chatroomuser::whereIn('chatroom_id', $current_user_chat_rooms)
-        ->where('user_id', $matching_user_id)
+        // 自分の持っているチャットルームを取得
+        $current_user_chat_rooms = Chatroomuser::where('user_id', Auth::id())
         ->pluck('chatroom_id');
 
+        // 自分の持っているチャットルームからチャット相手のいるルームを探す
+        $chat_room_id = Chatroomuser::whereIn('chatroom_id', $current_user_chat_rooms)
+        ->where('user_id', $matching_user_id)
+        ->pluck('chatroom_id');
+        
+          // チャット相手のユーザー情報を取得
+        $chat_room_user = User::findOrFail($matching_user_id);
+        $chat_room_user_shops_name=$chat_room_user->shops->first()->name;
 
-    // なければ作成する
-    if ($chat_room_id->isEmpty()){
+        // チャット相手のユーザー名を取得
+        $chat_room_user_name = $chat_room_user->name;
+        $chat_room_name='ユーザー名前：'.$chat_room_user_name.'   店舗名： '.$chat_room_user_shops_name;
+       
+        // なければ作成する
+        if ($chat_room_id->isEmpty()){
 
-        Chatroom::create(); //チャットルーム作成
+        Chatroom::create(['name'=>$chat_room_name]); //チャットルーム作成
         
         $latest_chat_room = Chatroom::orderBy('created_at', 'desc')->first(); //最新チャットルームを取得
 
@@ -52,39 +63,38 @@ class ChatController extends Controller
         Chatroomuser::create(
         ['chatroom_id' => $chat_room_id,
         'user_id' => $matching_user_id]);
-    }
+        }
 
-    // チャットルーム取得時はオブジェクト型なので数値に変換
-    if(is_object($chat_room_id)){
-        $chat_room_id = $chat_room_id->first();
-    }
+        // チャットルーム取得時はオブジェクト型なので数値に変換
+        if(is_object($chat_room_id)){
+            $chat_room_id = $chat_room_id->first();
+        }
     
-    // チャット相手のユーザー情報を取得
-    $chat_room_user = User::findOrFail($matching_user_id);
+      
+        // $messege_chatroom=Chatroom::findOrFail('chatroom_id');
+        // $messege_chatroom->name=$chat_room_user_name;
+        // $message_chatroom->save();
+        $chat_messages = Chatmessage::where('chatroom_id', $chat_room_id)
+        ->orderby('created_at')
+        ->get();
 
-    // チャット相手のユーザー名を取得
-    $chat_room_user_name = $chat_room_user->name;
-
-    $chat_messages = Chatmessage::where('chatroom_id', $chat_room_id)
-    ->orderby('created_at')
-    ->get();
-
-    return view('chat.show', 
-    compact('chat_room_id', 'chat_room_user',
-    'chat_messages','chat_room_user_name'));
+        return view('chat.show', 
+            compact('chat_room_id', 'chat_room_user',
+                    'chat_messages','chat_room_user_name'));
 
     }
     public function store(Request $request,$id){
+        
         Chatroom::findOrFail($id)->chatroom_message()->create([
             'chatroom_id'=>$id,
             'user_id'=>Auth::id(),
             'message'=>$request->message,
             ]);
     
-       $messageUserId=$request->id;
+        $messageUserId=$request->userId;
     
-    
-    return redirect(route('chat.show', ['id' => $messageUserId]));
+      
+        return redirect(route('chat.show', ['id' => $messageUserId]));
         
     }
 }

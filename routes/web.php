@@ -26,12 +26,13 @@ Route::group(['middleware' => ['auth']], function () {
 Route::resource('users', 'UsersController');
 Route::resource('shops', 'ShopsController');
 Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
+Route::get('shops/{id}/photo_app','ShopsController@photo_app')->name('shops.photo_app');
+Route::get('shops/{id}/phpto_delete','ShopsController@photo_delete')->name('shops.photo_delete');
 
-});
 //chat
-Route::group(['middleware' => ['auth']], function () {
- Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
- Route::post('chat/{id}/store', 'ChatController@store')->name('chat.store');
- Route::get('chat/createChatRoom', 'ChatController@createChatRoom')->name('chat.createChatRoom');
+Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
+Route::post('chat/{id}/store', 'ChatController@store')->name('chat.store');
+Route::get('chat/createChatRoom', 'ChatController@createChatRoom')->name('chat.createChatRoom');
+Route::get('chat/index', 'ChatController@index')->name('chat.index');
  
 });

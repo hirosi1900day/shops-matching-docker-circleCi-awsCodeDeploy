@@ -18,9 +18,9 @@
             </div>
         </aside>
         <div class="col-sm-8">
-              @foreach ($shops as $shop)
+              @foreach ($shops as $index=>$shop)
                 <ul class="nav nav-tabs nav-justified mb-3">
-                <li><img src="/uploads/{{ $shop->image_location }}" width="500" height="700"></li>
+                <li><img src="{{$shop_images[$index]}}" width="500" height="600"></li>
                 <li><input type="text" value="{{$shop->name}}" readonly></li>
                 <li><input type="text" value="{{$shop->shop_location_prefecture}}" readonly></li>
                 <li><input type="text" value="{{$shop->shop_location}}" readonly></li>

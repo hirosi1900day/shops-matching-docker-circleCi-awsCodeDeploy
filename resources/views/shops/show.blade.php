@@ -24,10 +24,10 @@
                       <li class="shop-information-list"><img src="/uploads/{{$shop->image_location }}" class="shop-img"></li>
                       
                       <div>店舗名</div><li class="shop-information-list">{{$shop->name}}</li>
-                      <div>店舗都道府県</div><li class="shop-information-list">{{$shop->shop_location_prefecture}}</li>
+                      <div>店舗都道府県</div><li class="shop-information-list">{{$prefecture_array[$shop->shop_location_prefecture]}}</li>
                       <div>店舗住所</div><li class="shop-information-list">{{$shop->shop_location}}</li>
                       <div>店舗使用可能時間</div><li class="shop-information-list"><{{$shop->free_time}}</li>
-                      <div>店舗の種類</div><li class="shop-information-list">{{$shop->shop_type}}</li>
+                      <div>店舗の種類</div><li class="shop-information-list">{{$shop_type_array[$shop->shop_type]}}</li>
                       <div>店舗紹介</div><li class="shop-information-list">{{$shop->shop_introduce}}</li>
                 </ul>
                      <a href="{{route('chat.show',['id'=>$shop->user->id])}}">
