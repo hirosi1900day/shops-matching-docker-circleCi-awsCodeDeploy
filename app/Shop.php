@@ -17,4 +17,8 @@ class Shop extends Model
         return $this->hasMany(Chatroom::class);
         
     }
+    public function gallerys()
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }

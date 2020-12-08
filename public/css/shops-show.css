@@ -1,6 +1,7 @@
 body{
     margin:0;
     padding:0;
+    
 }
 .picture-rounded{
     border-radius: 50%;
@@ -12,6 +13,8 @@ body{
 .container{
     margin:0 auto;
     text-align: center;
+    padding:0;
+    
     
     
 }

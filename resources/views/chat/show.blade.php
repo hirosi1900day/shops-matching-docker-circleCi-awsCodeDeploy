@@ -32,7 +32,7 @@
                 </div>
 
     {!! Form::submit('送信', ['class' => 'btn btn-primary']) !!}
-　　
+　　{{ $chat_messages->links() }}
 </div>
 
 

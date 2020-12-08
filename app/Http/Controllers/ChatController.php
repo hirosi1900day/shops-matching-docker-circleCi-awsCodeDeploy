@@ -20,10 +20,15 @@ class ChatController extends Controller
                                   ->pluck('chatroom_id');
         foreach($current_user_chat_rooms as $index=>$current_user_chat_room){
             $chat_room_names[$index]=Chatroom::findOrFail($current_user_chat_room)->name;
+            $room_user_id[$index]=Chatroomuser::where('chatroom_id',$current_user_chat_room)
+                          ->pluck('user_id');
         }
        
         
-        return view('chat.index',['chat_room_names'=>$chat_room_names]);
+        return view('chat.index',[
+            'chat_room_names'=>$chat_room_names,
+             'room_user_id'=>$room_user_id,
+            ]);
     }
     public function show($id){
             
@@ -75,8 +80,9 @@ class ChatController extends Controller
         // $messege_chatroom->name=$chat_room_user_name;
         // $message_chatroom->save();
         $chat_messages = Chatmessage::where('chatroom_id', $chat_room_id)
-        ->orderby('created_at')
-        ->get();
+        ->orderby('created_at','desc')
+        ->paginate(5);
+        
 
         return view('chat.show', 
             compact('chat_room_id', 'chat_room_user',

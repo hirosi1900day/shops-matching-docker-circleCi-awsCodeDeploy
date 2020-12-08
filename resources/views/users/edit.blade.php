@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <aside class="col-sm-4">
+        <aside class="col-sm-4 card-main">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">{{ $user->name }}</h3>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </aside>
-        <div class="col-sm-8">
+        <div class="col-sm-8 background-skyblue">
             
                
                 {!! Form::model($user, ['route' => ['users.update','user'=>$user->id],"method"=>"put"]) !!}

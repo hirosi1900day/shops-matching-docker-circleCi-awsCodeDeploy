@@ -1,0 +1,19 @@
+.shop-image{
+    width:35vw;
+    height:30vh;
+}
+.text{
+    margin:2vh 2vw;
+    padding:0;
+    background:white;
+    font-size:1.1rem;
+    border:solid 1px black;
+    border-radius:3px;
+}
+.button-delete{
+    background:red;
+    color:white;
+    padding:2vh 4vw;
+    margin:3vh;
+    border-radius:5px;
+}

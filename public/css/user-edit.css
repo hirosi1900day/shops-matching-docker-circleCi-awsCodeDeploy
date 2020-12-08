@@ -1,0 +1,10 @@
+.background-skyblue{
+    background:#bbe2f1;
+    border:solid 1px black;
+    border-radius:3px;
+    
+}
+.card-main{
+    margin:0;
+    padding:0;
+}

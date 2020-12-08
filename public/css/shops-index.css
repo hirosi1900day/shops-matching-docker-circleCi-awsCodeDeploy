@@ -1,0 +1,12 @@
+.shops-index-image{
+    width:30vw;
+    height:19vh;
+    border-radius: 5px;
+}
+.shops-index-container{
+    margin: 5vh;
+    padding: 2vh;
+    border:solid 1px black;
+    border-radius:3px;
+    border-radius: 6px;
+}
