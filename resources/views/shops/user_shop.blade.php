@@ -38,6 +38,10 @@
                {!! Form::submit('削除', ['class' => 'button-delete']) !!}
                {!! Form::close() !!} 
             </div>
+             <a href="{{route('gallery.showGallerys',['id'=>$shop->id])}}" class="button">
+                 <i class="fas fa-edit fa-2x"></i>
+                 <span>写真ギャラリー</span>
+            </a>
             
              @endforeach
             

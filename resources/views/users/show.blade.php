@@ -24,6 +24,8 @@
                  <span>情報を編集</span>
             </a>
            
+            
+           
         </div>
     </div>
 @endsection

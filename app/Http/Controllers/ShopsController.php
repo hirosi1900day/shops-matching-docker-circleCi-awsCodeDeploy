@@ -56,21 +56,7 @@ class ShopsController extends Controller
        
        
     }
-    // public function photo_delete($id){
-    //     $shop=Shop::findOrFail($id);
-    //     $deletname=$shop->image_location;
-    //     // $deletePath='public/uploads/'.$deletePath;
-    //     Storage::disk('s3')->delete($deletename);
-    //     $shop->image_location=null;
-    //     $shop->save();
-    //     return back();
-        
-    // }
-    // public function photo_app($id){
-    //     $shop=Shop::findOrFail($id);
-        
-    //     $appname= time().'.'.$file->getClientOriginalExtension();   
-    // }
+    
    
     public function show($id){
         

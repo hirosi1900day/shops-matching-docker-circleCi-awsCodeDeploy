@@ -34,5 +34,8 @@ Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
 Route::post('chat/{id}/store', 'ChatController@store')->name('chat.store');
 Route::get('chat/createChatRoom', 'ChatController@createChatRoom')->name('chat.createChatRoom');
 Route::get('chat/index', 'ChatController@index')->name('chat.index');
- 
+//gallery
+Route::get('gallery/create', 'GallerysController@create')->name('gallery.create');
+Route::get('gallery/store', 'GallerysController@store')->name('gallery.store');
+Route::get('gallery/{id}/showGallerys', 'GallerysController@showGallerys')->name('gallery.showGallerys');
 });

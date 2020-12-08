@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ShopsGallery extends Migration
+class ShopsGalleries extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class ShopsGallery extends Migration
      */
     public function up()
     {
-        Schema::create('gallerys', function (Blueprint $table) {
+        Schema::create('galleries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('shops_id');
+            $table->unsignedBigInteger('shop_id');
             $table->string('image_location');
             $table->timestamps();
             
-            $table->foreign('shops_id')->references('id')->on('shops');
+            $table->foreign('shop_id')->references('id')->on('shops');
         });
     }
 
@@ -30,6 +30,6 @@ class ShopsGallery extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gallerys');
+        Schema::dropIfExists('galleries');
     }
 }
