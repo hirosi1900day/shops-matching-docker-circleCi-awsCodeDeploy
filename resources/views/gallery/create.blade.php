@@ -6,7 +6,7 @@
 
     <div class="row">
         <div class="col-6">
-            {!! Form::open(['route' => 'messages.store','enctype'=>'multipart/form-data']) !!}
+            {!! Form::open(['route' => 'gallery.store','enctype'=>'multipart/form-data']) !!}
 
                 <div class="form-group">
                     {!! Form::label('image_location', '写真を追加:') !!}

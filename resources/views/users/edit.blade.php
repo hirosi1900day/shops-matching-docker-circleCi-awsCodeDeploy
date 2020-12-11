@@ -9,15 +9,22 @@
                 </div>
                 <div class="card-body">
                     {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
-                    <img class="rounded img-fluid" src="{{ Gravatar::get($user->email, ['size' => 500]) }}" alt="">
+                     @if($user->profile_image_location=='')
+                    <img class="rounded img-fluid shops-index-image" src="{{ Gravatar::get($user->email) }}" alt="">
+                    @else
+                    <img class="rounded img-fluid" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                    @endif
                 </div>
             </div>
         </aside>
         <div class="col-sm-8 background-skyblue">
             
                
-                {!! Form::model($user, ['route' => ['users.update','user'=>$user->id],"method"=>"put"]) !!}
-
+                {!! Form::model($user, ['route' => ['users.update','user'=>$user->id],'enctype'=>'multipart/form-data','method'=>'put']) !!}
+                <div class="form-group">
+                    {!! Form::label('profile_image_location', 'プロフィール写真を変更する:') !!}
+                    {!! Form::file('profile_image_location', null, ['class' => 'form-control']) !!}
+                </div>
                 <div class="form-group">
                     {!! Form::label('name', 'name:') !!}
                     {!! Form::text('name', null, ['class' => 'form-control']) !!}

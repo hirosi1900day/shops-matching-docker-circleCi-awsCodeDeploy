@@ -29,9 +29,16 @@
                       <div>店舗使用可能時間</div><li class="shop-information-list"><{{$shop->free_time}}</li>
                       <div>店舗の種類</div><li class="shop-information-list">{{$shop_type_array[$shop->shop_type]}}</li>
                       <div>店舗紹介</div><li class="shop-information-list">{{$shop->shop_introduce}}</li>
+                      <input type="hidden" id="address" value="{{$prefecture_array[$shop->shop_location_prefecture]}}{{$shop->shop_location}}">
+                      <input type="hidden" id="shop-name" value="店舗名:{{$shop->name}}住所:{{$shop->shop_location}}">
+                      <button id="search">マップを表示する</button>
+                      <div>
+                          <div id="target"></div>
+                      </div>
+                          
                 </ul>
                      <a href="{{route('chat.show',['id'=>$shop->user->id])}}">
-                         <buttom>メッセージへ</buttom>
+                         <span class="button">メッセージへ</span>
         　            </a>
                 
                 
@@ -42,7 +49,10 @@
         <!--</div>-->
     </div>
               
-            
+    
+    <script src="{{ secure_asset('/js/google-map.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyBnBE1Os7I9iYTfLnsTBjT9tWvxhXzCe94&callback=initMap" async defer></script>
+        
    
 
 @endsection

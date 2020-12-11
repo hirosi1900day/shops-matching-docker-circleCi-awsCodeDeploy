@@ -90,7 +90,9 @@ class ChatController extends Controller
 
     }
     public function store(Request $request,$id){
-        
+        $request->validate([
+            'message' => 'required|max:255',
+        ]);
         Chatroom::findOrFail($id)->chatroom_message()->create([
             'chatroom_id'=>$id,
             'user_id'=>Auth::id(),

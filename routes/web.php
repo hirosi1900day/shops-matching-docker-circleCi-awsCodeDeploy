@@ -24,6 +24,8 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 //user
 Route::group(['middleware' => ['auth']], function () {
 Route::resource('users', 'UsersController');
+Route::get('users/{id}/delete_profile_photo', 'UsersController@delete_profile_photo')->name('users.delete_profile_photo');
+//shop
 Route::resource('shops', 'ShopsController');
 Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
 Route::get('shops/{id}/photo_app','ShopsController@photo_app')->name('shops.photo_app');
@@ -36,6 +38,7 @@ Route::get('chat/createChatRoom', 'ChatController@createChatRoom')->name('chat.c
 Route::get('chat/index', 'ChatController@index')->name('chat.index');
 //gallery
 Route::get('gallery/create', 'GallerysController@create')->name('gallery.create');
-Route::get('gallery/store', 'GallerysController@store')->name('gallery.store');
+Route::post('gallery/store', 'GallerysController@store')->name('gallery.store');
 Route::get('gallery/{id}/showGallerys', 'GallerysController@showGallerys')->name('gallery.showGallerys');
+Route::get('gallery/{id}/destroy', 'GallerysController@destroy')->name('gallery.destroy');
 });

@@ -9,7 +9,14 @@
                 </div>
                 <div class="card-body">
                     {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
-                    <img class="rounded img-fluid" src="{{ Gravatar::get($user->email, ['size' => 50]) }}" alt="">
+                    @if($user->profile_image_location=='')
+                    <img class="user-profile-image" src="{{ Gravatar::get($user->email) }}" alt="">
+                    @else
+                    <img class="user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                    <a href="{{route('users.delete_profile_photo',['id'=>$user->id])}}" class="button">
+                    <span>削除</span>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

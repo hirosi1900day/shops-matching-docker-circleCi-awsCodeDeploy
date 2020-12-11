@@ -29,7 +29,12 @@ class ShopsController extends Controller
 
         $request->validate([
         'name'=>['required','string','max:255'],
-        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048'],
+        'shop_location'=>['required','string','max:255'],
+        'free_time'=>['required','string','max:255'],
+        'shop_type'=>['required'],
+        'shop_introduce'=>['required','string','max:255'],
+        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048','required',],
+        
        ]);
         if($file = $request->image_location){
         //保存するファイルに名前をつける    
@@ -52,7 +57,7 @@ class ShopsController extends Controller
         'shop_type'=>$request->shop_type,
         'shop_introduce'=>$request->shop_introduce,
    ]);
-   return back();
+    return redirect(route('shops.index'));
        
        
     }

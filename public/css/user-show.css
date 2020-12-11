@@ -2,6 +2,10 @@
     border:solid 1px black;
     border-radius:3px;
 }
+.user-profile-image{
+    width: 10vw;
+  
+}
 .card-header{
     border:solid 1px black;
     border-radius:3px;
