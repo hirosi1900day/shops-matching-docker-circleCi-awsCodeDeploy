@@ -26,12 +26,16 @@
                 <div>都道府県</div><div class="text">{{$shop->shop_location_prefecture}}</div>
                 <div>貸出可能時間</div><div class="text">{{$shop->free_time}}</div>
                 <div>店舗の種類</div><div class="text">{{$shop->shop_type}}</div>
+                <!--@php-->
+                <!--dd($shop->user_id);-->
+                <!--@endphp-->
+                @if($shop->user_id!=Auth::user()->id)
                 
                 <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
                 
                     <span>店舗情報詳細へ</span>
                 </a>
-            
+                @endif
            
              
            

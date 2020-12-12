@@ -1,0 +1,36 @@
+.messages {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.messages li {
+  display: flex;
+}
+
+.messages li + li {
+  margin-top: 32px;
+}
+
+li.right-side {
+  flex-direction: row-reverse;
+}
+
+.pic {
+  /* background: pink; */
+  width: 80px;
+  text-align: center;
+}
+.pic img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.chat_text {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 24px;
+  max-width: 60%;
+  line-height: 1.8;
+}

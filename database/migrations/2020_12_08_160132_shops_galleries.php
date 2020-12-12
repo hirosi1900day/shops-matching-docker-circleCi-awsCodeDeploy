@@ -19,7 +19,7 @@ class ShopsGalleries extends Migration
             $table->string('image_location');
             $table->timestamps();
             
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
         });
     }
 

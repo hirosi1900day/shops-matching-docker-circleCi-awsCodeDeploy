@@ -47,9 +47,9 @@
                  
                <!--    <span>削除</span>-->
                <!--</a>-->
-              {!! Form::model($shop, ['route' => ['shops.destroy', $shop->id], 'method' => 'delete']) !!}
-              {!! Form::submit('削除', ['class' => 'button-delete']) !!}
-              {!! Form::close() !!}
+               {!! Form::model($shop, ['route' => ['shops.destroy', $shop->id], 'method' => 'delete']) !!}
+               {!! Form::submit('削除', ['class' => 'button-delete']) !!}
+               {!! Form::close() !!}
             </div>  
            
              @endforeach

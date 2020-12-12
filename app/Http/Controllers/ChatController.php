@@ -16,22 +16,26 @@ class ChatController extends Controller
     
     public function index(){
         
-        $current_user_chat_rooms = Chatroomuser::where('user_id', Auth::id())
+        $current_room_ids = Chatroomuser::where('user_id', Auth::id())
                                   ->pluck('chatroom_id');
-        foreach($current_user_chat_rooms as $index=>$current_user_chat_room){
-            $chat_room_names[$index]=Chatroom::findOrFail($current_user_chat_room)->name;
-            $room_user_id[$index]=Chatroomuser::where('chatroom_id',$current_user_chat_room)
-                          ->pluck('user_id');
+        
+        foreach( $current_room_ids as  $index=>$current_room_id){
+            $current_user_rooms[$index]=Chatroomuser::findOrFail($current_room_id);
+        }
+        
+      
+     
+        if(count($current_user_rooms)==0){
+            $current_user_rooms=[];
         }
        
         
         return view('chat.index',[
-            'chat_room_names'=>$chat_room_names,
-             'room_user_id'=>$room_user_id,
+            'current_user_rooms'=>$current_user_rooms
             ]);
     }
     public function show($id){
-            
+        //$idはユーザーid
         $matching_user_id = $id;
     
         // 自分の持っているチャットルームを取得
@@ -49,31 +53,33 @@ class ChatController extends Controller
 
         // チャット相手のユーザー名を取得
         $chat_room_user_name = $chat_room_user->name;
-        $chat_room_name='ユーザー名前：'.$chat_room_user_name.'   店舗名： '.$chat_room_user_shops_name;
+        $chat_room_name='';
        
         // なければ作成する
         if ($chat_room_id->isEmpty()){
 
-        Chatroom::create(['name'=>$chat_room_name]); //チャットルーム作成
+            Chatroom::create(['name'=>$chat_room_name]); //チャットルーム作成
         
-        $latest_chat_room = Chatroom::orderBy('created_at', 'desc')->first(); //最新チャットルームを取得
+            $latest_chat_room = Chatroom::orderBy('created_at', 'desc')->first(); //最新チャットルームを取得
 
-        $chat_room_id = $latest_chat_room->id;
+            $chat_room_id = $latest_chat_room->id;
 
-        // 新規登録 モデル側 $fillableで許可したフィールドを指定して保存
-        Chatroomuser::create( 
-        ['chatroom_id' => $chat_room_id,
-        'user_id' => Auth::id()]);
+            // 新規登録 モデル側 $fillableで許可したフィールドを指定して保存
+            Chatroomuser::create( 
+                ['chatroom_id' => $chat_room_id,
+                'user_id' => Auth::id()]);
 
-        Chatroomuser::create(
-        ['chatroom_id' => $chat_room_id,
-        'user_id' => $matching_user_id]);
+            Chatroomuser::create(
+                ['chatroom_id' => $chat_room_id,
+                'user_id' => $matching_user_id]);
         }
 
         // チャットルーム取得時はオブジェクト型なので数値に変換
         if(is_object($chat_room_id)){
             $chat_room_id = $chat_room_id->first();
         }
+        
+        
     
       
         // $messege_chatroom=Chatroom::findOrFail('chatroom_id');
@@ -104,5 +110,8 @@ class ChatController extends Controller
       
         return redirect(route('chat.show', ['id' => $messageUserId]));
         
+    }
+    public function message_redirect($id){
+        return redirect(route('chat.show', ['id' => $id]));  
     }
 }
