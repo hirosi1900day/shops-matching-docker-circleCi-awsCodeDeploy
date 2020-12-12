@@ -10,6 +10,7 @@ class ShopsController extends Controller
 {
      public function index(){
         $shops = Shop::all();
+        $shop_images=[];
         foreach($shops as $index=>$shop){
            $shop_images[$index] = Storage::disk('s3')->url($shop->image_location);
        }
@@ -36,6 +37,11 @@ class ShopsController extends Controller
         'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048','required',],
         
        ]);
+        if(count($request->user()->shops()->get())>=1)
+        {
+         $error='店舗は１店舗のみしか登録できません';
+            return view('error.error',['error'=>$error]);
+        }
         if($file = $request->image_location){
         //保存するファイルに名前をつける    
         $fileName = time().'.'.$file->getClientOriginalExtension();
@@ -48,6 +54,7 @@ class ShopsController extends Controller
         //画像が登録されなかった時はから文字をいれる
         $name = "";
     }
+       
         $request->user()->shops()->create([
         'name'=>$request->name,
         'image_location'=>$fileName,
@@ -93,6 +100,7 @@ class ShopsController extends Controller
             $user = \Auth::user();
             // ユーザのshopの一覧を作成日時の降順で取得
             $shops = $user->shops()->orderBy('created_at', 'desc')->get();
+            $shop_images=[];
             foreach($shops as $index=>$shop){
                 $shop_images[$index] = Storage::disk('s3')->url($shop->image_location);
             }
@@ -122,43 +130,43 @@ class ShopsController extends Controller
     public function update(Request $request, $id){
         $shop = Shop::findOrFail($id);
         $request->validate([
-        'name'=>['required','string','max:255'],
-        'image_location'=>['required','file','mimes:jpeg,png,jpg,bmb','max:2048'],
+        'name'=>['string','max:255'],
+        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048'],
        ]);
      if($file = $request->image_location){
-      //保存するファイルに名前をつける    
+      
         $fileName = time().'.'.$file->getClientOriginalExtension();
-      //Laravel直下のpublicディレクトリに新フォルダをつくり保存する
-        //  $target_path = public_path('/uploads/');
-        //  $file->move($target_path,$fileName);
         Storage::disk('s3')->delete($shop->image_location);
         $path = Storage::disk('s3')->putFileAs('/', $file, $fileName,'public');
        
-    }else{
-   //画像が登録されなかった時はから文字をいれる
-        $name = "";
     }
-   
         $shop->name=$request->name;
+         if($file = $request->image_location){
         $shop->image_location=$fileName;
-        $shop->shop_location_prefecture=$request->shop_location_prefecture;
+        }
+        if($request->shop_location_prefecture!=0){
+            $shop->shop_location_prefecture=$request->shop_location_prefecture;
+        }
         $shop->shop_location=$request->shop_location;
         $shop->free_time=$request->free_time;
-        $shop->shop_type=$request->shop_type;
+        if($request->shop_type!=0){
+             $shop->shop_type=$request->shop_type;
+        }
         $shop->shop_introduce=$request->shop_introduce;
         $shop->save();
-        return back();
+        return redirect(route('mypage.shop'));
     }
     public function destroy($id){
         // idの値で投稿を検索して取得
         $shop = Shop::findOrFail($id);
-
+       
         // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
-        if (\Auth::id() === $shop->user_id) {
+        if (\Auth::id() == $shop->user_id) {
            $deletename=$shop->image_location;
-        // $deletePath='public/uploads/'.$deletename;
-        Storage::disk('s3')->delete($deletename);
-        $shop->delete();
+           // $deletePath='public/uploads/'.$deletename;
+           Storage::disk('s3')->delete($deletename);
+           $shop->delete();
+           
             
         }
 

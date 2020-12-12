@@ -33,7 +33,7 @@ class GallerysController extends Controller
         'image_location'=>$path
         
         ]);
-        return back();
+        return redirect(route('gallery.showGallerys', ['id' => $request->user()->shops()->first()->id]));
      
     }
     public function showGallerys($id){

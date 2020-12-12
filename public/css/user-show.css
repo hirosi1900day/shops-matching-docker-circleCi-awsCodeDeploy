@@ -3,7 +3,7 @@
     border-radius:3px;
 }
 .user-profile-image{
-    width: 10vw;
+    width: 15vw;
   
 }
 .card-header{
@@ -51,7 +51,7 @@
 .button{
     background:#007BFF;
     color:white;
-    padding:2.5vh 4vw;
+    padding:1vh 1vw;
     margin:1vh;
     border-radius:5px;
 }

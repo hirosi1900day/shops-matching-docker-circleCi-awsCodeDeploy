@@ -29,7 +29,7 @@
                 
                 <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
                 
-                 <span>店舗情報詳細へ</span>
+                    <span>店舗情報詳細へ</span>
                 </a>
             
            

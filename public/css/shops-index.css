@@ -1,7 +1,11 @@
 .shops-index-image{
-    width:30vw;
-    height:19vh;
+    width:90%;
+   
     border-radius: 5px;
+}
+.flex{
+    display: flex;
+    justify-content:center;
 }
 .shops-index-container{
     margin: 5vh;
