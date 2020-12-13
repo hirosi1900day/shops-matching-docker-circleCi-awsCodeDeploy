@@ -40,18 +40,12 @@ class GallerysController extends Controller
         //$idショップのID
         
         $gallerys=Shop::findOrFail($id)->gallerys()->get();
+        $user=Shop::findOrFail($id)->user()->get();
        
-        $gallery_images=[];
-        foreach($gallerys as $index=>$gallery){
-           $gallery_images[$index] = Storage::disk('s3')->url($gallery->image_location);
-        }
-       
-        
           // メッセージ一覧ビューでそれを表示
         return view('gallery.showGallerys', [
             'gallerys' => $gallerys,
-            'gallery_images'=>$gallery_images,
-           
+            'user'=>$user,
         ]);
         
     }

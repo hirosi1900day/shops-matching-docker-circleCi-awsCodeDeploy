@@ -37,9 +37,13 @@
                       </div>
                           
                 </ul>
-                     <a href="{{route('chat.show',['id'=>$shop->user->id])}}">
+                     <a href="{{route('chat.create_chatroom',['id'=>$shop->id])}}">
                          <span class="button">メッセージへ</span>
         　            </a>
+        　            <a href="{{route('gallery.showGallerys',['id'=>$shop->id])}}" class="button">
+                         <i class="fas fa-edit fa-2x"></i>
+                         <span>写真ギャラリー</span>
+                     </a>
                 
                 
             

@@ -16,11 +16,13 @@ class ChatmassagesTable extends Migration
         Schema::create('chatmessages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('shop_id');
             $table->unsignedBigInteger('chatroom_id');
             $table->string('message');
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('shop_id')->references('id')->on('shops');
             $table->foreign('chatroom_id')->references('id')->on('chatrooms');
         });
     }

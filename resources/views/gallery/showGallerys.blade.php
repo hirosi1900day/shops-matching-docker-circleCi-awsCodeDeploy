@@ -21,12 +21,13 @@
            <div class="col-sm-8">
              
                 
-                <div><img src="{{$gallery_images[$index]}}" class="shops-index-image"></div>
+                <div><img src="{{Storage::disk('s3')->url($gallery->image_location)}}" class="shops-index-image"></div>
                 
-                
+                @if((Auth::user()->id)==($user->first()->id))
                 <a href="{{route('gallery.destroy',['id'=>$gallery->id])}}" class="button">
                 <span>削除</span>
                 </a>
+                @endif
                 
             
            
@@ -39,9 +40,12 @@
     @else
     <div>店舗がありません</div>
     @endif
+    
+    @if((Auth::user()->id)==($user->first()->id))
     <a href="{{route('gallery.create')}}" class="button">
         <span>作成</span>
     </a>
+    @endif
 </div>
     
 @endsection

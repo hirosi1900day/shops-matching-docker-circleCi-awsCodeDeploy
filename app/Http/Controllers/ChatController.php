@@ -14,104 +14,88 @@ use Auth;
 class ChatController extends Controller
 {
     
-    public function index(){
-        
-        $current_room_ids = Chatroomuser::where('user_id', Auth::id())
-                                  ->pluck('chatroom_id');
-        
-        foreach( $current_room_ids as  $index=>$current_room_id){
-            $current_user_rooms[$index]=Chatroomuser::findOrFail($current_room_id);
+   public function create_chatroom($id){
+      //$idはshop_id
+      // チャットルームを取得
+      $chat_room_id = Chatroom::where('user_id', Auth::id())
+        ->where('shop_id',$id)
+        ->pluck('id');
+        //チャットルームがなければ作成する
+      if($chat_room_id->isEmpty()){
+          Chatroom::create(['user_id'=>Auth::id(),'shop_id'=>$id,]); //チャットルーム作成
+          $latest_chat_room = Chatroom::orderBy('created_at', 'desc')->first(); //最新チャットルームを取得
+          $chat_room_id = $latest_chat_room->id;
         }
-        
-      
-     
-        if(count($current_user_rooms)==0){
-            $current_user_rooms=[];
-        }
-       
-        
-        return view('chat.index',[
-            'current_user_rooms'=>$current_user_rooms
-            ]);
-    }
-    public function show($id){
-        //$idはユーザーid
-        $matching_user_id = $id;
-    
-        // 自分の持っているチャットルームを取得
-        $current_user_chat_rooms = Chatroomuser::where('user_id', Auth::id())
-        ->pluck('chatroom_id');
-
-        // 自分の持っているチャットルームからチャット相手のいるルームを探す
-        $chat_room_id = Chatroomuser::whereIn('chatroom_id', $current_user_chat_rooms)
-        ->where('user_id', $matching_user_id)
-        ->pluck('chatroom_id');
-        
-          // チャット相手のユーザー情報を取得
-        $chat_room_user = User::findOrFail($matching_user_id);
-        $chat_room_user_shops_name=$chat_room_user->shops->first()->name;
-
-        // チャット相手のユーザー名を取得
-        $chat_room_user_name = $chat_room_user->name;
-        $chat_room_name='';
-       
-        // なければ作成する
-        if ($chat_room_id->isEmpty()){
-
-            Chatroom::create(['name'=>$chat_room_name]); //チャットルーム作成
-        
-            $latest_chat_room = Chatroom::orderBy('created_at', 'desc')->first(); //最新チャットルームを取得
-
-            $chat_room_id = $latest_chat_room->id;
-
-            // 新規登録 モデル側 $fillableで許可したフィールドを指定して保存
-            Chatroomuser::create( 
-                ['chatroom_id' => $chat_room_id,
-                'user_id' => Auth::id()]);
-
-            Chatroomuser::create(
-                ['chatroom_id' => $chat_room_id,
-                'user_id' => $matching_user_id]);
-        }
-
         // チャットルーム取得時はオブジェクト型なので数値に変換
-        if(is_object($chat_room_id)){
+      if(is_object($chat_room_id)){
             $chat_room_id = $chat_room_id->first();
         }
-        
-        
-    
       
-        // $messege_chatroom=Chatroom::findOrFail('chatroom_id');
-        // $messege_chatroom->name=$chat_room_user_name;
-        // $message_chatroom->save();
-        $chat_messages = Chatmessage::where('chatroom_id', $chat_room_id)
-        ->orderby('created_at','desc')
-        ->paginate(5);
-        
+      return redirect(route('chat.show', ['id' => $chat_room_id]));
+   }
+   public function show($id){
+       //$idはchatroom_id
+      
+      
+      $users=[];
+      $chatroom=Chatroom::findOrFail($id);
+      $messages=$chatroom->message()->get();
+      if($messages->isEmpty()){
+          $messages=[];
+      }
+      foreach($messages as $index=>$message){
+         $users[$index]=User::findOrFail($message->user_id);
+      }
+      $shop=Shop::findOrFail($chatroom->shop_id);
+      
 
-        return view('chat.show', 
-            compact('chat_room_id', 'chat_room_user',
-                    'chat_messages','chat_room_user_name'));
-
-    }
-    public function store(Request $request,$id){
-        $request->validate([
+      
+     
+      
+      
+      return view('chat.show', ['messages'=>$messages,
+                                'users'=>$users,
+                                'shop'=>$shop,
+                                'chatroom'=>$chatroom,]); 
+   }
+   public function store(Request $request,$id){
+       //$idはchatroom_id
+       $request->validate([
             'message' => 'required|max:255',
         ]);
-        Chatroom::findOrFail($id)->chatroom_message()->create([
-            'chatroom_id'=>$id,
-            'user_id'=>Auth::id(),
-            'message'=>$request->message,
-            ]);
-    
-        $messageUserId=$request->userId;
-    
-      
-        return redirect(route('chat.show', ['id' => $messageUserId]));
-        
-    }
-    public function message_redirect($id){
+        //user_idでメッセージ送信者を特定する
+        //shop_idでどのショップに対する内容かを特定する
+        //これらはinput hiddenで送信する
+       Chatroom::findOrFail($id)->message()->create([
+          'user_id'=>$request->user_id,
+          'shop_id'=>$request->shop_id,
+          'chatroom_id'=>$id,
+          'message'=>$request->message,
+           ]);
+        return redirect(route('chat.show', ['id' => $id]));
+   
+   }
+   public function user_index(){
+       $chat_rooms = Chatroom::where('user_id', Auth::id())->get();
+       
+       $shops=[];
+       foreach($chat_rooms as $index=>$chat_room){
+           $shops[$index]=Shop::findOrFail($chat_room->shop_id);
+       }
+       return view('chat.user_index',['shops'=>$shops,'chat_rooms'=>$chat_rooms,]);
+   }
+   public function shop_index($id){
+       //$idはshop_id
+       $chat_rooms = Chatroom::where('shop_id', $id)->get();
+       $users=[];
+       foreach($chat_rooms as $index=>$chat_room){
+           $users[$index]=User::findOrFail($chat_room->user_id);
+       }
+       return view('chat.shop_index',['users'=>$users,'chat_rooms'=>$chat_rooms,]);
+       
+   }
+   public function message_redirect($id){
         return redirect(route('chat.show', ['id' => $id]));  
     }
+   
 }

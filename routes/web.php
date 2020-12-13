@@ -27,6 +27,8 @@ Route::resource('users', 'UsersController');
 Route::get('users/{id}/delete_profile_photo', 'UsersController@delete_profile_photo')->name('users.delete_profile_photo');
 //shop
 Route::resource('shops', 'ShopsController');
+Route::post('shops/{id}/narrow_down', 'ShopsController@narrow_down')->name('shops.narrow_down');
+
 Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
 Route::get('shops/{id}/photo_app','ShopsController@photo_app')->name('shops.photo_app');
 Route::get('shops/{id}/phpto_delete','ShopsController@photo_delete')->name('shops.photo_delete');
@@ -34,8 +36,9 @@ Route::get('shops/{id}/phpto_delete','ShopsController@photo_delete')->name('shop
 //chat
 Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
 Route::post('chat/{id}/store', 'ChatController@store')->name('chat.store');
-Route::get('chat/createChatRoom', 'ChatController@createChatRoom')->name('chat.createChatRoom');
-Route::get('chat/index', 'ChatController@index')->name('chat.index');
+Route::get('chat/{id}/create_chatroom', 'ChatController@create_chatroom')->name('chat.create_chatroom');
+Route::get('chat/user_index', 'ChatController@user_index')->name('chat.user_index');
+Route::get('chat/{id}/shop_index', 'ChatController@shop_index')->name('chat.shop_index');
 Route::get('chat/{id}/message_redirect', 'ChatController@message_redirect')->name('chat.message_redirect');
 //gallery
 Route::get('gallery/create', 'GallerysController@create')->name('gallery.create');

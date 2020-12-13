@@ -25,7 +25,8 @@
                             <li class="dropdown-item">{!! link_to_route('shops.create', 'ショップ作成',) !!}</li>
                             <li class="dropdown-item">{!! link_to_route('mypage.shop', 'Myshop',) !!}</li>
 　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('shops.index', 'ショップ一覧',) !!}</li>
-　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('chat.index', 'メッセージユーザー一覧',) !!}</li>
+　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('chat.user_index', '取引メッセージ',) !!}</li>
+　　　　　　　          
                             <li class="dropdown-divider"></li>
                             {{-- ログアウトへのリンク --}}
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>

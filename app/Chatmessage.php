@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chatmessage extends Model
 {
-     protected $fillable = ['chatroom_id', 'user_id','message'];
-    public function message_sending_user(){
+    protected $fillable = ['chatroom_id', 'user_id','shop_id','message'];
+    public function user(){
         return $this->belongTo(User::class);
     }
-    public function message_belongs_room(){
-        return $this->belongTo(Chatroom::class);
+     public function shop(){
+        return $this->belongTo(Shop::class);
+    }
+    public function chatrooms(){
+        return $this->hasMany(Chatroom::class);
     }
 }

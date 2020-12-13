@@ -13,8 +13,8 @@ class Shop extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function chatrooms(){
-        return $this->hasMany(Chatroom::class);
+    public function shop_chatmessages(){
+        return $this->hasMany(Chatmessage::class);
         
     }
     public function gallerys()
