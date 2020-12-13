@@ -27,7 +27,7 @@ Route::resource('users', 'UsersController');
 Route::get('users/{id}/delete_profile_photo', 'UsersController@delete_profile_photo')->name('users.delete_profile_photo');
 //shop
 Route::resource('shops', 'ShopsController');
-Route::post('shops/{id}/narrow_down', 'ShopsController@narrow_down')->name('shops.narrow_down');
+Route::post('shops/narrow_down', 'ShopsController@narrow_down')->name('shops.narrow_down');
 
 Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
 Route::get('shops/{id}/photo_app','ShopsController@photo_app')->name('shops.photo_app');

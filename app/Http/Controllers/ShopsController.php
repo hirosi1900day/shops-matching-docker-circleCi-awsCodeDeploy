@@ -186,12 +186,36 @@ class ShopsController extends Controller
    
     }
      public function narrow_down(Request $request){
-         
-        $shops=Shop::where('shop_location_prefecture',$request->prefecture_id)
+        if($request->prefecture_id==0 && $request->shop_type==0){
+            $shops=Shop::all();
+        }elseif($request->prefecture_id==0){
+            $shops=Shop::where('shop_type',$request->shop_type)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        }elseif($request->shop_type==0){
+             $shops=Shop::where('shop_location_prefecture',$request->prefecture_id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        }else{
+             $shops=Shop::where('shop_location_prefecture',$request->prefecture_id)
                     ->where('shop_type',$request->shop_type)
                     ->orderBy('created_at', 'desc')
                     ->get();
-        return view('shops.index',['shops'=>$shops]);
+        }
+ 
+       
+                    
+         $prefecture_array=['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',
+            '茨城','栃木','群馬','埼玉','千葉','東京','神奈川','新潟','富山','石川','福井','山梨','長野','岐阜',
+            '静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島',
+            '香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄',];
+        
+         $shop_type_array=['選択してください','居酒屋','カフェ',
+            '事務所','その他',];
+        return view('shops.index',
+        ['shops'=>$shops,
+         'prefecture_array'=>$prefecture_array,
+         'shop_type_array'=>$shop_type_array,]);
     }
      
 
