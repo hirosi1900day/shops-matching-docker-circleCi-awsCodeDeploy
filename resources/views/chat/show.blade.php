@@ -15,7 +15,11 @@
                         <a class="chat_user_name" href="{{route('users.show',['user'=>$message->user_id])}}">
                             <span>{{Auth::user()->name}}</span>
                             <div class="pic">
-                                <img src="{{ secure_asset('/img/gallery-thumbnail/kitten1.jpg')}}">
+                               @if(Auth::user()->profile_image_location=='')
+                                   <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="">
+                               @else
+                                   <img src="{{Storage::disk('s3')->url(Auth::user()->profile_image_location)}}" alt="">
+                               @endif
                             </div>
                         </a>
                         <div class="chat_text">
@@ -28,7 +32,11 @@
                    <a class="chat_user_name" href="{{route('users.show',['user'=>$users[$index]->id])}}">
                        <span>{{$users[$index]->name}}</span>
                        <div class="pic">
-                           <img src="{{ secure_asset('/img/gallery-thumbnail/kitten1.jpg')}}">
+                           @if(Auth::user()->profile_image_location=='')
+                                <img src="{{ Gravatar::get($users[$index]->email) }}" alt="">
+                           @else  
+                                <img src="{{Storage::disk('s3')->url($users[$index]->profile_image_location)}}" alt="">
+                           @endif
                        </div>
                    </a>
                    <div class="chat_text">

@@ -21,4 +21,9 @@ class Shop extends Model
     {
         return $this->hasMany(Gallery::class);
     }
+    public function favorite_users()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'shop_id', 'user_id')->withTimestamps();
+    }
+    
 }

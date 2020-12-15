@@ -12,10 +12,15 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ $user->name }}</h3>
                     </div>
-                   <div class="card-body">
-                        {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
-                        <img class="rounded img-fluid user-profile-image" src="{{ Gravatar::get($user->email, ['size' => 500]) }}" alt="">
-                   </div>
+                    <div class="card-body">
+                         @if($user->profile_image_location=='')
+                             <img class="user-profile-image" src="{{ Gravatar::get($user->email) }}" alt="">
+                         @else
+                             <img class="user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                             
+                    @endif
+                        
+                    </div>
                 </div>
             </aside>
         <div class="col-sm-8">

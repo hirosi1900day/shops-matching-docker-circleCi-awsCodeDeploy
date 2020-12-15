@@ -23,6 +23,7 @@ li.right-side {
 }
 .pic img {
   width: 5vw;
+  height: 5vw;
   object-fit: cover;
   border-radius: 50%;
 }

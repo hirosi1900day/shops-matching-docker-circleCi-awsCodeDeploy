@@ -4,31 +4,34 @@
 
     <h1>shop詳細</h1>
 
+    <div class="background-skyblue">
+
+    <h1>Myshop</h1>
+
     
-       <div class="container">
-        <!--<aside class="col-sm-4">-->
-            <div class="profile-photo-group">
-                <div class="">
-                    <h3 class="card-title">{{ $shop->user->name }}</h3>
+       <div class="row">
+            <aside class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{$shop->user->name }}</h3>
+                    </div>
+                   <div class="card-body">
+                        {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
+                        <img class="rounded img-fluid user-profile-image" src="{{ Gravatar::get($shop->user->email, ['size' => 500]) }}" alt="">
+                   </div>
                 </div>
-                <div class="">
-                    {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
-                    <img class="picture-rounded" src="{{ Gravatar::get($shop->user->email) }}" alt="">
-                </div>
-            </div>
-        <!--</aside>-->
-        <!--<div class="col-sm-8">-->
+            </aside>
+        <div class="col-sm-8">
               
-                <ul class="nav nav-tabs nav-justified mb-3">
-                    
-                      <li class="shop-information-list"><img src="/uploads/{{$shop->image_location }}" class="shop-img"></li>
+                
+                      <div><img src="/uploads/{{$shop->image_location }}" class="shop-img"></div>
                       
-                      <div>店舗名</div><li class="shop-information-list">{{$shop->name}}</li>
-                      <div>店舗都道府県</div><li class="shop-information-list">{{$prefecture_array[$shop->shop_location_prefecture]}}</li>
-                      <div>店舗住所</div><li class="shop-information-list">{{$shop->shop_location}}</li>
-                      <div>店舗使用可能時間</div><li class="shop-information-list"><{{$shop->free_time}}</li>
-                      <div>店舗の種類</div><li class="shop-information-list">{{$shop_type_array[$shop->shop_type]}}</li>
-                      <div>店舗紹介</div><li class="shop-information-list">{{$shop->shop_introduce}}</li>
+                      <div>店舗名</div><div class="text">{{$shop->name}}</div>
+                      <div>店舗都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
+                      <div>店舗住所</div><div class="text">{{$shop->shop_location}}</div>
+                      <div>店舗使用可能時間</div><div class="text">{{$shop->free_time}}</div>
+                      <div>店舗の種類</div><div class="text">{{$shop_type_array[$shop->shop_type]}}</div>
+                      <div>店舗紹介</div><div class="text">{{$shop->shop_introduce}}</div>
                       <input type="hidden" id="address" value="{{$prefecture_array[$shop->shop_location_prefecture]}}{{$shop->shop_location}}">
                       <input type="hidden" id="shop-name" value="店舗名:{{$shop->name}}住所:{{$shop->shop_location}}">
                       <button id="search">マップを表示する</button>
@@ -36,12 +39,11 @@
                           <div id="target"></div>
                       </div>
                           
-                </ul>
+              
                      <a href="{{route('chat.create_chatroom',['id'=>$shop->id])}}">
                          <span class="button">メッセージへ</span>
         　            </a>
         　            <a href="{{route('gallery.showGallerys',['id'=>$shop->id])}}" class="button">
-                         <i class="fas fa-edit fa-2x"></i>
                          <span>写真ギャラリー</span>
                      </a>
                 
@@ -50,7 +52,7 @@
            
              
            
-        <!--</div>-->
+        </div>
     </div>
               
     

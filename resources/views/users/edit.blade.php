@@ -10,9 +10,9 @@
                 <div class="card-body">
                     {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
                      @if($user->profile_image_location=='')
-                    <img class="rounded img-fluid shops-index-image" src="{{ Gravatar::get($user->email) }}" alt="">
+                    <img class="rounded img-fluid user-profile-image" src="{{ Gravatar::get($user->email) }}" alt="">
                     @else
-                    <img class="rounded img-fluid" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                    <img class="rounded img-fluid user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
                     @endif
                 </div>
             </div>

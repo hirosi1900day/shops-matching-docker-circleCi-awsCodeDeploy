@@ -42,10 +42,44 @@ class User extends Authenticatable
     }
     
     public function message_chatrooms(){
-        return $this->belongToMany(Chatroom::class,'chatmessges','user_id','chatroom_id');
+        return $this->belongsToMany(Chatroom::class,'chatmessges','user_id','chatroom_id');
     }
     public function user_message(){
         return $this->hasMany(Chatmessage::class);
     }
-   
+    public function favorites()
+    {
+        return $this->belongsToMany(Shop::class, 'favorites', 'user_id', 'shop_id')->withTimestamps();
+    }
+    public function is_favorite($shopId){
+        return $this->favorites()->where('shop_id',$shopId)->exists();
+    }
+    public function favorite($shopId){
+        // すでにお気に入りしているかの確認
+        $exist = $this->is_favorite($shopId);
+        
+
+        if ($exist) {
+            // すでにお気に入りしていれば何もしない
+            return false;
+        } else {
+            // 未フォローであればフォローする
+            $this->favorites()->attach($shopId);
+            return true;
+        }
+    } 
+    
+    public function unfavorite($shopId){
+         // すでにフォローしているかの確認
+        $exist = $this->is_favorite($shopId);
+        
+        if ($exist) {
+            // すでにフォローしていればフォローを外す
+            $this->favorites()->detach($shopId);
+            return true;
+        } else {
+            // 未フォローであれば何もしない
+            return false;
+        }
+    }
 } 

@@ -28,7 +28,6 @@ Route::get('users/{id}/delete_profile_photo', 'UsersController@delete_profile_ph
 //shop
 Route::resource('shops', 'ShopsController');
 Route::post('shops/narrow_down', 'ShopsController@narrow_down')->name('shops.narrow_down');
-
 Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
 Route::get('shops/{id}/photo_app','ShopsController@photo_app')->name('shops.photo_app');
 Route::get('shops/{id}/phpto_delete','ShopsController@photo_delete')->name('shops.photo_delete');
@@ -45,4 +44,15 @@ Route::get('gallery/create', 'GallerysController@create')->name('gallery.create'
 Route::post('gallery/store', 'GallerysController@store')->name('gallery.store');
 Route::get('gallery/{id}/showGallerys', 'GallerysController@showGallerys')->name('gallery.showGallerys');
 Route::get('gallery/{id}/destroy', 'GallerysController@destroy')->name('gallery.destroy');
+
+//favoite
+ 
+Route::post('favorites/{id}/favoite', 'FavoritesController@store')->name('favorites.favorite');
+Route::delete('favorites/{id}/unfavorite', 'FavoritesController@destroy')->name('favorites.unfavorite');
+Route::get('favorites/index', 'FavoritesController@index')->name('favorites.index');
 });
+
+
+
+
+

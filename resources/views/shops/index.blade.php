@@ -32,9 +32,12 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ $shop->user->name }}</h3>
                     </div>
-                    <div class="card-body">
-                    {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
-                        <img class="rounded img-fluid shops-index-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                    <div class="card-body ">
+                        @if($shop->user->profile_image_location=='')
+                            <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                        @else
+                            <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
+                        @endif
                     </div>
                 </div>
             </aside>
@@ -55,6 +58,20 @@
                 
                     <span>店舗情報詳細へ</span>
                 </a>
+                
+                @if (Auth::user()->is_favorite($shop->id))
+                {{-- unfavoriteボタンのフォーム --}}
+                {!! Form::open(['route' => ['favorites.unfavorite','id'=> $shop->id], 'method' => 'delete']) !!}
+                {!! Form::submit('Unfavorite', ['class' => "btn btn-danger btn-block"]) !!}
+                {!! Form::close() !!}
+                @else
+                {{-- favoriteボタンのフォーム --}}
+                {!! Form::open(['route' => ['favorites.favorite', 'id'=>$shop->id]]) !!}
+                {!! Form::submit('Favorite', ['class' => "btn btn-primary btn-block"]) !!}
+                {!! Form::close() !!}
+                @endif
+
+
                 @endif
            
              

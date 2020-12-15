@@ -1,6 +1,6 @@
 .shops-index-image{
     width:90%;
-   
+    object-fit: cover;
     border-radius: 5px;
 }
 .flex{
