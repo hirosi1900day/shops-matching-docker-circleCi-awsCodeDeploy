@@ -1,4 +1,23 @@
+@if(count($shops)>0)
+@foreach($shops as $shop)
+ <section id="section_gallery">
+                   <!-- ギャラリー -->
+  <section id="gallery" class="gallery">
+    <div class="gallery__phrase animated">ギャラリー</div>
+    <h2 class="gallery__title animated">Gallery</h2>
+    <div class="image-gallery animated">
+      <div class="image-gallery__item">
+        <a class="d-inline-block" href="img/kitten1.jpg">
+          <img class="gallery-photo" src="{{Storage::disk('s3')->url($shop->image_location)}}" width="150" height="150" alt="アメリカンショートヘア">
+        </a>
+      </div>
+    </div>
+    <!--/.image-gallery -->
+  </section>
+
 </section>
+@endforeach
+@else
  <section id="section_gallery">
                    <!-- ギャラリー -->
   <section id="gallery" class="gallery">
@@ -42,14 +61,14 @@
       </div>
       <div class="image-gallery__item">
         <a class="d-inline-block" href="img/puppy4.jpg">
-          <img class="img-fluid" src="{{ secure_asset('img/gallery-thumbnail/puppy4.jpg') }}" width="150" height="150" alt="ポメラニアン">
+          <img class="img-fluid" src="{{ secure_asset('img/gallery-thumbnail/puppy4.jpg') }}" >
         </a>
       </div>
     </div>
     <!--/.image-gallery -->
   </section>
   <!--/.gallery -->
-
+@endif
   <!-- フッター -->
   <footer>
     &copy; 2019 Puppies and Kittens

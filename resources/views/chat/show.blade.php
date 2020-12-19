@@ -32,7 +32,7 @@
                    <a class="chat_user_name" href="{{route('users.show',['user'=>$users[$index]->id])}}">
                        <span>{{$users[$index]->name}}</span>
                        <div class="pic">
-                           @if(Auth::user()->profile_image_location=='')
+                           @if($users[$index]->profile_image_location=='')
                                 <img src="{{ Gravatar::get($users[$index]->email) }}" alt="">
                            @else  
                                 <img src="{{Storage::disk('s3')->url($users[$index]->profile_image_location)}}" alt="">
@@ -53,7 +53,7 @@
   <h1>メッセージがありません</h1>
   @endif
  
-　{!! Form::open(['route' => ['chat.store', 'id'=>$chatroom->id], 'method' => 'post']) !!}
+{!! Form::open(['route' => ['chat.store', 'id'=>$chatroom->id], 'method' => 'post']) !!}
 
                 <div class="form-group">
                     
@@ -64,8 +64,13 @@
                 </div>
 
   {!! Form::submit('送信', ['class' => 'btn btn-primary']) !!}
+
   <a href="{{route('chat.message_redirect',['id'=>$chatroom->id])}}" class="button">
                 <span>メッセージ更新</span>
   </a>
 </div>  
+
+
+
+
 @endsection

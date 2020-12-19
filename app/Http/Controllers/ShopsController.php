@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
 {
+     public function welcom(){
+         $shops=Shop::inRandomOrder()->take(10)->get();
+         return view('welcom.welcom',['shops'=>$shops]);
+     }
+     
      public function index(){
         $shops = Shop::all();
          $prefecture_array=['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',

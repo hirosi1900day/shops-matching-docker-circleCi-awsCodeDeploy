@@ -13,9 +13,7 @@
     <body>
        
 
-    @if (Auth::check())
-    @include('welcom.index')
-    @else
+   
     
     @include('commons.navbar')
  <section id="section_top" ">
@@ -92,21 +90,7 @@
             新⁠し⁠い⁠音⁠楽⁠の⁠世⁠界⁠をあなたの為に。<br>
             高品質な音⁠楽⁠を見⁠つ⁠け⁠ま⁠し⁠ょ⁠う⁠。<br>
             音楽の楽しさをあなたの手に。
-        　</div><!-- contents-text -->
-       <!--@if (Auth::check())-->
-        <!--<div id="bottom_signin_login">-->
-        <!--  <div class="contents-button">-->
-        <!--    <button  id="welcom_logout">-->
-        <!--    　<a href="{{ route('logout.get') }}">-->
-        <!--      ログアウト-->
-        <!--      </a>-->
-        <!--    </button>-->
-        <!--  </div>  -->
-          
-        <!--</div>-->
-       
-       <!--@else-->
-         
+        
         <div id="bottom_signin_login">
           <div class="contents-button" >
           <a href="{{ route('signup.get') }}">
@@ -123,7 +107,6 @@
           </a>  
           </div><!-- contents-button -->
         </div>
-        <!--@endif-->
       　</div><!-- contents-main -->
     　</div><!-- container -->
     </section>
@@ -132,7 +115,7 @@
     @include('welcom.gallery')
  </section>
        
-    @endif    
+ 
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

@@ -1,21 +1,32 @@
 new Vue({
     el: '#chat',
     data: {
-        message: ''
+        text: '',
+        room: '',
+        roomId:'',
     },
     methods: {
+        getMessages() {
+            axios.get(chat.show).then(res => {
+                // propsで渡されたmessagesをarrayに入れている
+                　
+                this.array = res.data
+            })
+        },
+
         send() {
-       console.log('aaa');
-            const url = 'chat/$(chat-button).value/store';
-            const params = { message: this.message };
-            axios.post(url, params)
-                .then((response) => {
+            let obj = {
+                text: this.text
+            }
+            
+　　　　　　
+            axios.post(`chat/{${this.roomId}}/store`, obj).then(res => {
+                // this.getMessages()
+            }).catch(function(error) {
+                console.log(error);
+            })
+        },
 
-                    // 成功したらメッセージをクリア
-                    this.message = '';
 
-                });
-
-        }
     }
 });
