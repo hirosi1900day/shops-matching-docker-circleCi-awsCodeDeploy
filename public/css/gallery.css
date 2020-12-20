@@ -1,0 +1,54 @@
+.image-gallery {
+  /* 左右中央に置く */
+  margin: 0 auto;
+  text-align: center;
+
+  width: 90%;
+  max-width: 1024px;
+}
+
+.image-gallery__item {
+  /* 横に並ぶようにする */
+  display: inline-block;
+
+  /* width, heightがborderを含んだサイズになるようにする */
+  box-sizing: border-box;
+
+  width:140px;
+  height:140px;
+
+  /* 白い枠をつける */
+  border: 8px solid #fff;
+
+  /* 影をつける */
+  box-shadow: 4px 4px 6px 1px #ccc;
+
+  margin-left: 9px;
+  margin-right: 9px;
+  margin-bottom: 18px;
+
+  /* 0.1秒かけて値を変化させるエフェクト */
+  -webkit-transition: -webkit-transform 0.1s;
+  transition: -webkit-transform 0.1s;
+  transition: transform 0.1s;
+  transition: transform 0.1s, -webkit-transform 0.1s;
+}
+.gallery-photo{
+ object-fit: cover;
+  width: 120px;
+  height: 120px;
+}
+.gallery__phrase {
+  margin: auto;
+  text-align: center;
+}
+.gallery__title{
+  margin: auto;
+  text-align: center;
+}
+
+.image-gallery__item:hover {
+  /* 1.1倍に拡大 */
+  -webkit-transform: scale(2.0);
+  transform: scale(2.0);
+}

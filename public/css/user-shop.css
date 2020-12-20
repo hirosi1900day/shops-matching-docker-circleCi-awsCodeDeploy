@@ -1,23 +1,3 @@
-.shop-image{
-    width:90%;
-    height:30vh;
-    object-fit: cover;
-}
 
-.text{
-    margin:2vh 2vw;
-    padding:0;
-    background:white;
-    font-size:1.1rem;
-    border:solid 1px black;
-    border-radius:3px;
-}
-.button-delete{
-    background:red;
-    color:white;
-    padding:1vh 1.5vw;
-    
-    
-    margin:1vh;
-    border-radius:5px;
-}
+
+

@@ -1,0 +1,25 @@
+{
+    "name": "ショップ",
+    "short_name": "ショップ",
+    "icons": [
+        {
+          "src": "/img/image-test/bg_01a.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        },
+        {
+          "src": "/img/image-test/bg_01a.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        },
+        {
+          "src": "/img/image-test/bg_01a.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+    ],
+    "theme_color": "#7baf27",
+    "background_color": "#ffffff",
+    "start_url": "/?utm_source=homescreen",
+    "display": "standalone"
+}

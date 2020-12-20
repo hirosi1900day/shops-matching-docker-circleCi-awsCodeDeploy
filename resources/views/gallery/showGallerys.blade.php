@@ -3,49 +3,37 @@
 @section('content')
 <div class="background-skyblue">
     <h1>ギャラリー一覧</h1>
-
+    @if((Auth::user()->id)==($user->first()->id))
+    <a href="{{route('gallery.create',['id'=>$shop->id])}}" class="button">
+        <span>ギャラリー作成する</span>
+    </a>
+    @endif
     @if (count($gallerys) > 0)
-     @foreach ($gallerys as $index=>$gallery)
-       <div class="row shops-index-container">
-            <aside class="col-sm-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $gallery->shop()->first()->user->name }}</h3>
-                    </div>
-                    <div class="card-body">
-                    {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
-                        <img class="rounded img-fluid shops-index-image" src="{{ Gravatar::get($gallery->shop()->first()->user->email) }}" alt="">
-                    </div>
-                </div>
-            </aside>
-           <div class="col-sm-8">
-             
-                
-                <div><img src="{{Storage::disk('s3')->url($gallery->image_location)}}" class="shops-index-image"></div>
-                
-                @if((Auth::user()->id)==($user->first()->id))
-                <a href="{{route('gallery.destroy',['id'=>$gallery->id])}}" class="button">
-                <span>削除</span>
-                </a>
-                @endif
-                
+     <div class="image-gallery animated">
+        <div class="d-inline-block">
+          @foreach ($gallerys as $index=>$gallery)
+             <div class="image-gallery__item">
+                   <img class="gallery-photo" src="{{Storage::disk('s3')->url($gallery->image_location)}}" width="150" height="150">
+                   @if((Auth::user()->id)==($user->first()->id))
+                   <a href="{{route('gallery.destroy',['id'=>$gallery->id])}}" class="button">
+                   <span>削除</span>
+                   </a>
+                   @endif
+
+             </div>
             
-           
-             
-           
-            </div>
-    </div>
+
               
-    @endforeach  
+    @endforeach 
+
+        </div>
+      </div>
+  
     @else
     <div>店舗がありません</div>
     @endif
     
-    @if((Auth::user()->id)==($user->first()->id))
-    <a href="{{route('gallery.create')}}" class="button">
-        <span>作成</span>
-    </a>
-    @endif
+    
 </div>
     
 @endsection

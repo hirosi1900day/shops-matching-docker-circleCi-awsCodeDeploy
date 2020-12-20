@@ -1,0 +1,115 @@
+body{
+    margin:0;
+    padding:0;
+    background-color: #f5f5f5;
+}
+.background-skyblue{
+    background-color: #f5f5f5;
+    /*border:solid 1px black;*/
+    border-radius:3px;
+    padding:5px;
+    min-height: 40vh;
+   
+    
+    
+}
+.background-gray-non-border{
+     background-color: #f5f5f5;
+     
+}
+.padding{
+    padding:3px;
+    
+}
+.list-height{
+  padding: 2vw;
+}
+.list-fontsize{
+    font-size:2vw;
+}
+.margin{
+    margin:4px;
+}
+.textForm{
+    border-radius:5px;
+}
+.shadow{
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+}
+.container{
+    margin:0;
+    text-align: center;
+    padding:0;
+
+}
+.center{
+    text-align: center;
+}
+.list-profile-image{
+    width: 7vw;
+    height: 7vw;
+    border:3px solid ;
+    border-radius: 50%;
+    object-fit:cover;
+    border:4px solid #13b1c0;
+}
+.user-profile-image{
+    width: 15vw;
+    height: 15vw;
+    border:3px solid ;
+    border-radius: 50%;
+    object-fit:cover;
+    border:4px solid #13b1c0;
+  
+}
+.list{
+    background-color: white;
+    padding:3vh;
+    border-bottom: 1px solid #808080;
+}
+
+.button{
+    background:#13b1c0;;
+    color:white;
+    padding:1vh 1vw;
+    margin:1vh;
+    border-radius:5px;
+}
+.button-delete{
+    background:red;
+    color:white;
+    padding:1vh 1.5vw;
+    margin:1vh;
+    border-radius:5px;
+}
+#loading {
+  width: 100vw;
+  height: 100vh;
+  transition: all 1s;
+  background-color: #0bd;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.spinner {
+  width: 100px;
+  height: 100px;
+  margin: 200px auto;
+  background-color: #fff;
+  border-radius: 100%;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+/* ローディングアニメーション */
+@keyframes sk-scaleout {
+  0% {
+    transform: scale(0);
+  } 100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+.loaded {
+  opacity: 0;
+  visibility: hidden;
+}

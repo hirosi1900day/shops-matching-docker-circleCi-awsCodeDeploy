@@ -10,9 +10,9 @@
                 <div class="card-body">
                     {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}}
                      @if($user->profile_image_location=='')
-                    <img class="rounded img-fluid user-profile-image" src="{{ Gravatar::get($user->email) }}" alt="">
+                    <img class="user-profile-image" src="{{ Gravatar::get($user->email) }}" alt="">
                     @else
-                    <img class="rounded img-fluid user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                    <img class="user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
                     @endif
                 </div>
             </div>
@@ -27,11 +27,11 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('name', 'name:') !!}
-                    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('name', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('self_introduce', 'introduce:') !!}
-                    {!! Form::text('self_introduce', null, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('self_introduce', null, ['class' => 'form-control']) !!}
                 </div>
 
 

@@ -9,12 +9,12 @@ use App\Gallery;
 
 class GallerysController extends Controller
 {
-    public function create(){
-        
+    public function create($id){
+        $shop=Shop::findOrFail($id);
         // 作成ビューを表示
-        return view('gallery.create');
+        return view('gallery.create',['shop'=>$shop]);
     }
-    public function store(Request $request){
+    public function store(Request $request,$id){
       
         $request->validate([
         'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048'],
@@ -28,24 +28,24 @@ class GallerysController extends Controller
         $path = Storage::disk('s3')->putFileAs('/shopsGallery',$file, $fileName,'public');
         
        }
-       
-        $request->user()->shops()->first()->gallerys()->create([
+        $shop=Shop::findOrFail($id);
+        $shop->gallerys()->create([
         'image_location'=>$path
         
         ]);
-        return redirect(route('gallery.showGallerys', ['id' => $request->user()->shops()->first()->id]));
+        return redirect(route('gallery.showGallerys', ['id' => $shop->id]));
      
     }
     public function showGallerys($id){
         //$idショップのID
-        
+        $shop=Shop::findOrFail($id);
         $gallerys=Shop::findOrFail($id)->gallerys()->get();
         $user=Shop::findOrFail($id)->user()->get();
-       
           // メッセージ一覧ビューでそれを表示
         return view('gallery.showGallerys', [
             'gallerys' => $gallerys,
             'user'=>$user,
+            'shop'=>$shop,
         ]);
         
     }

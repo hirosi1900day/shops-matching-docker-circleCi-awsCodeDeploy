@@ -39,8 +39,8 @@ Route::get('chat/user_index', 'ChatController@user_index')->name('chat.user_inde
 Route::get('chat/{id}/shop_index', 'ChatController@shop_index')->name('chat.shop_index');
 Route::get('chat/{id}/message_redirect', 'ChatController@message_redirect')->name('chat.message_redirect');
 //gallery
-Route::get('gallery/create', 'GallerysController@create')->name('gallery.create');
-Route::post('gallery/store', 'GallerysController@store')->name('gallery.store');
+Route::get('gallery/{id}/create', 'GallerysController@create')->name('gallery.create');
+Route::post('gallery/{id}/store', 'GallerysController@store')->name('gallery.store');
 Route::get('gallery/{id}/showGallerys', 'GallerysController@showGallerys')->name('gallery.showGallerys');
 Route::get('gallery/{id}/destroy', 'GallerysController@destroy')->name('gallery.destroy');
 

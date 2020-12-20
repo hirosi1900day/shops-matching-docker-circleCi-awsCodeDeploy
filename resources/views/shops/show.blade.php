@@ -24,7 +24,7 @@
         <div class="col-sm-8">
               
                 
-                      <div><img src="/uploads/{{$shop->image_location }}" class="shop-img"></div>
+                      <div><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image"></div>
                       
                       <div>店舗名</div><div class="text">{{$shop->name}}</div>
                       <div>店舗都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>

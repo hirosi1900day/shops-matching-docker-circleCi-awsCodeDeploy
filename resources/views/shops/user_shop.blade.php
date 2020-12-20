@@ -7,26 +7,25 @@
 
     @if (count($shops) > 0)
        <div class="row">
-            <aside class="col-sm-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $user->name }}</h3>
+            <aside class="col-sm-3">
+                <div>
+                    <div class="center">
+                        <h3>{{ $user->name }}</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="center">
                          @if($user->profile_image_location=='')
                              <img class="user-profile-image" src="{{ Gravatar::get($user->email) }}" alt="">
                          @else
                              <img class="user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
-                             
-                    @endif
+                    　　@endif
                         
                     </div>
                 </div>
             </aside>
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             @foreach ($shops as $shop)
                 <div>店舗写真</div>
-            　　<div><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shop-image"></div>
+            　　<div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shop-image"></div>
                 <div>店舗名</div>
                 <div class="text">{{$shop->name}}</div>
                 <div>店舗都道府県</div>

@@ -1,7 +1,13 @@
 .shops-index-image{
-    width:90%;
+    width:40vw;
     object-fit: cover;
     border-radius: 5px;
+  
+}
+.shop-image{
+    width:90%;
+    height:30vh;
+    object-fit: cover;
 }
 .flex{
     display: flex;
@@ -10,7 +16,31 @@
 .shops-index-container{
     margin: 5vh;
     padding: 2vh;
-    border:solid 1px black;
+    /*border:solid 1px black;*/
     border-radius:3px;
     border-radius: 6px;
+    background-color: white;
 }
+.picture-rounded{
+    border-radius: 50%;
+}
+.profile-photo-group{
+    height: 4vh;
+    width: 4vw;
+}
+
+
+.shop-img{
+    width: 50%;
+    border-radius: 5%;
+}
+.shop-information-list{
+    width: 100%;
+   
+}
+#target{
+     width: 550px;
+      height: 200px;
+}
+
+
