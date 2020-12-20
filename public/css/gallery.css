@@ -1,6 +1,6 @@
 .image-gallery {
   /* 左右中央に置く */
-  margin: 0 auto;
+  margin: 8px auto;
   text-align: center;
 
   width: 90%;
@@ -14,8 +14,7 @@
   /* width, heightがborderを含んだサイズになるようにする */
   box-sizing: border-box;
 
-  width:140px;
-  height:140px;
+
 
   /* 白い枠をつける */
   border: 8px solid #fff;
@@ -35,8 +34,8 @@
 }
 .gallery-photo{
  object-fit: cover;
-  width: 120px;
-  height: 120px;
+  width: 17vw;
+  height: 17vw;
 }
 .gallery__phrase {
   margin: auto;
@@ -49,6 +48,6 @@
 
 .image-gallery__item:hover {
   /* 1.1倍に拡大 */
-  -webkit-transform: scale(2.0);
-  transform: scale(2.0);
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
 }

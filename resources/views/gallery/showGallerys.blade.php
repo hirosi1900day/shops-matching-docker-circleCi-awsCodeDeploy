@@ -13,14 +13,15 @@
         <div class="d-inline-block">
           @foreach ($gallerys as $index=>$gallery)
              <div class="image-gallery__item">
-                   <img class="gallery-photo" src="{{Storage::disk('s3')->url($gallery->image_location)}}" width="150" height="150">
+                   <img class="gallery-photo" src="{{Storage::disk('s3')->url($gallery->image_location)}}" >
+             </div>    
                    @if((Auth::user()->id)==($user->first()->id))
                    <a href="{{route('gallery.destroy',['id'=>$gallery->id])}}" class="button">
                    <span>削除</span>
                    </a>
                    @endif
 
-             </div>
+             
             
 
               
