@@ -65,7 +65,7 @@
                     <span>店舗情報詳細へ</span>
                 </a>
                 
-                @if (Auth::user()->is_favorite($shop->id))
+               @if (Auth::user()->is_favorite($shop->id))
                 {{-- unfavoriteボタンのフォーム --}}
                 {!! Form::open(['route' => ['favorites.unfavorite','id'=> $shop->id], 'method' => 'delete']) !!}
                 {!! Form::submit('Unfavorite', ['class' => "btn btn-danger btn-block"]) !!}
@@ -76,11 +76,7 @@
                 {!! Form::submit('Favorite', ['class' => "btn btn-primary btn-block"]) !!}
                 {!! Form::close() !!}
                 @endif
-
-
                 @endif
-           
-             
            
             </div>
     </div>

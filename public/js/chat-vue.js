@@ -1,3 +1,18 @@
+const buttonSubmit = {
+  props: ['roomId'],
+  
+  template: `
+    <button type="submit" class="btn btn-link">
+      送信
+    </button>
+  `,
+  data() {
+    return { chatroomId: this.roomId };
+  },
+  
+};
+
+
 new Vue({
     el: '#chat',
     data: {
@@ -5,7 +20,7 @@ new Vue({
         room: '',
         roomId:'',
     },
-    methods: {
+     methods: {
         getMessages() {
             axios.get(chat.show).then(res => {
                 // propsで渡されたmessagesをarrayに入れている
@@ -26,7 +41,9 @@ new Vue({
                 console.log(error);
             })
         },
+   }
+   
 
 
-    }
+   
 });

@@ -8,21 +8,31 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
 {
+    
      public function welcom(){
-         $shops=Shop::inRandomOrder()->take(10)->get();
-         return view('welcom.welcom',['shops'=>$shops]);
+         $shops_new=Shop::orderBy('created_at','desc')->limit(4)->get();
+         $shop_favorite=Shop::withCount('favorite_users')->orderBy('favorite_users_count', 'desc')
+         ->limit(4)
+         ->get();
+         
+         
+         $prefecture_array=config('const.prefecture_array');
+        
+         $shop_type_array=config('const.shop_type_array');
+        
+         
+         return view('welcom.welcom',['shops_new'=>$shops_new,
+                 'shop_favorite'=>$shop_favorite,
+                 'prefecture_array'=>$prefecture_array,
+                 'shop_type_array'=> $shop_type_array,
+             ]);
      }
-     
      public function index(){
         $shops = Shop::all();
-         $prefecture_array=['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',
-        '茨城','栃木','群馬','埼玉','千葉','東京','神奈川','新潟','富山','石川','福井','山梨','長野','岐阜',
-        '静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島',
-        '香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄',];
+        $prefecture_array=config('const.prefecture_array');
         
-        $shop_type_array=['選択してください','居酒屋','カフェ',
-        '事務所','その他',];
-      
+        $shop_type_array=config('const.shop_type_array');
+        
           // メッセージ一覧ビューでそれを表示
         return view('shops.index', [
             'shops' => $shops,
@@ -84,14 +94,9 @@ class ShopsController extends Controller
        
          $shop = Shop::findOrFail($id);
          $path = Storage::disk('s3')->url($shop->image_location);
-         $prefecture_array=['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',
-        '茨城','栃木','群馬','埼玉','千葉','東京','神奈川','新潟','富山','石川','福井','山梨','長野','岐阜',
-        '静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島',
-        '香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄',];
+         $prefecture_array=config('const.prefecture_array');
+         $shop_type_array=config('const.shop_type_array');
         
-        $shop_type_array=['選択してください','居酒屋','カフェ',
-        '事務所','その他',];
-
          // メッセージ詳細ビューでそれを表示
          return view('shops.show', [
             'shop' => $shop,
@@ -112,13 +117,9 @@ class ShopsController extends Controller
         
             $shops = $user->shops()->orderBy('created_at', 'desc')->get();
            
-            $prefecture_array=['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',
-            '茨城','栃木','群馬','埼玉','千葉','東京','神奈川','新潟','富山','石川','福井','山梨','長野','岐阜',
-            '静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島',
-            '香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄',];
+            $prefecture_array=config('const.prefecture_array');
         
-             $shop_type_array=['選択してください','居酒屋','カフェ',
-            '事務所','その他',];
+            $shop_type_array=config('const.shop_type_array');
             
             $data = [
                 'user' => $user,
@@ -210,13 +211,9 @@ class ShopsController extends Controller
  
        
                     
-         $prefecture_array=['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',
-            '茨城','栃木','群馬','埼玉','千葉','東京','神奈川','新潟','富山','石川','福井','山梨','長野','岐阜',
-            '静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島',
-            '香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄',];
+        $prefecture_array=config('const.prefecture_array');
         
-         $shop_type_array=['選択してください','居酒屋','カフェ',
-            '事務所','その他',];
+        $shop_type_array=config('const.shop_type_array');
         return view('shops.index',
         ['shops'=>$shops,
          'prefecture_array'=>$prefecture_array,

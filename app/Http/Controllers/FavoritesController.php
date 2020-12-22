@@ -12,7 +12,7 @@ class FavoritesController extends Controller
         \Auth::user()->favorite($id);
         
         // 前のURLへリダイレクトさせる
-        return back();
+        return redirect(route('shops.index'));
         
     }
     
@@ -20,7 +20,7 @@ class FavoritesController extends Controller
          // 認証済みユーザ（閲覧者）が、 idのユーザをフォローする
         \Auth::user()->unfavorite($id);
         // 前のURLへリダイレクトさせる
-        return back();
+       return redirect(route('shops.index'));
         
     }
     public function index(){

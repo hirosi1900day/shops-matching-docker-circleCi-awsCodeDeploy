@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'ShopsController@welcom');
+Route::get('/','ShopsController@welcom');
+    
+
 
 //ユーザー登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
