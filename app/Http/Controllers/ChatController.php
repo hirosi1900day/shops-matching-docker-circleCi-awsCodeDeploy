@@ -31,7 +31,7 @@ class ChatController extends Controller
             $chat_room_id = $chat_room_id->first();
         }
       
-      return redirect(route('chat.show', ['id' => $chat_room_id]));
+      return redirect(route('chat.view', ['id' => $chat_room_id]));
    }
    public function show($id){
        //$idはchatroom_id
@@ -47,22 +47,42 @@ class ChatController extends Controller
          $users[$index]=User::findOrFail($message->user_id);
       }
       $shop=Shop::findOrFail($chatroom->shop_id);
+    
+      return ['messages'=>$messages,
+             'users'=>$users,
+             'shop'=>$shop,
+             'chatroom'=>$chatroom,]; 
+   }
+   public function view($id){
+   
+      $chatroom=Chatroom::findOrFail($id);
+      $messages=$chatroom->message()->get();
+      if($messages->isEmpty()){
+          $messages=[];
+      }
       
-
-      
+      $shop=Shop::findOrFail($chatroom->shop_id);
      
-      
-      
-      return view('chat.show', ['messages'=>$messages,
-                                'users'=>$users,
-                                'shop'=>$shop,
-                                'chatroom'=>$chatroom,]); 
+      if($shop->user()->first()->id!=Auth::id()){
+          $user=$shop->user()->first();
+          
+      }else{
+          $user=User::findOrFail($chatroom->user_id);
+      }
+     
+       return view('chat.show2',[
+             'chatroom'=>$chatroom,
+             'shop'=>$shop,
+             'user'=>$user,
+             ]);
    }
    public function store(Request $request,$id){
        //$idはchatroom_id
+       
        $request->validate([
             'message' => 'required|max:255',
         ]);
+        
         //user_idでメッセージ送信者を特定する
         //shop_idでどのショップに対する内容かを特定する
         //これらはinput hiddenで送信する

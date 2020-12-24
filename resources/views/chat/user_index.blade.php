@@ -18,7 +18,7 @@
                       </div>
                   </div> 
                   <div class="col-10 list-height">
-                      <a href="{{route('chat.show',['id'=>$chat_room->id])}}">
+                      <a href="{{route('chat.view',['id'=>$chat_room->id])}}">
                           <div class="list-fontsize">{{$shops[$index]->name}}</div>
                       </a>
                   </div>

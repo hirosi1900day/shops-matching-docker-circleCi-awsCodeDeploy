@@ -28,13 +28,13 @@ class ShopsController extends Controller
              ]);
      }
      public function index(){
-        $shops = Shop::all();
+        $shops = Shop::orderBy('created_at','desc')->get();
         $prefecture_array=config('const.prefecture_array');
         
         $shop_type_array=config('const.shop_type_array');
         
           // メッセージ一覧ビューでそれを表示
-        return view('shops.index', [
+        return view('shops.index2', [
             'shops' => $shops,
             'prefecture_array'=>$prefecture_array,
             'shop_type_array'=> $shop_type_array,

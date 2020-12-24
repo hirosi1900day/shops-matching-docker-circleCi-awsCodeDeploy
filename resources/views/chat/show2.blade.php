@@ -1,24 +1,111 @@
 @extends('layouts.app')
 
 @section('content')
-<!--<div v-for="message in array" :key="message.id">-->
-<!--                 <div class="media-body ml-3">-->
-<!--                   <div class="bg-light rounded py-2 px-3 mb-2">-->
-<!--                     <p class="text-small mb-0 text-dark"></p>-->
-<!--                 </div>-->
-<!--               </div>-->
+<div id="chat">
+ <ul class="messages">
+  <div v-for="(m,index) in messages.messages">
 
-    <div id="chat">       
-        <form enctype="multipart/form-data" @submit.prevent="send" class="bg-light">
-            <div class="input-group">
-               <input type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light" v-model="text">
-               <div class="input-group-append">
-               <button-submit :room-id="{{$chatroom->id}}">送信</button>
-               </div>
+     
+
+   
+    <section v-if="m.user_id == {{Auth::id()}}">
+      <li class="right-side">
+        <a class="chat_user_name" href="{{route('users.show',['user'=>Auth::id()])}}">
+          <span>{{Auth::user()->name}}</span>
+            <div class="pic">
+                @if(Auth::user()->profile_image_location=='')
+                    <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="">
+                @else
+                    <img src="{{Storage::disk('s3')->url(Auth::user()->profile_image_location)}}" alt="">
+                @endif
             </div>
-         </form> 
-    </div>  
-         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
-   　　　 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-   　　 　<script src="{{ secure_asset('/js/chat-vue.js') }}"></script>
+          <span v-text="m.message"></span>
+        </a>
+      </li>
+    </section>
+    <section v-else>
+      <li class="left-side">
+        <a class="chat_user_name" href="{{route('users.show',['user'=>$user->id])}}">
+           <span v-text="messages.users[index].name"></span>
+           <div class="pic">
+           <!--<div v-if="messages.users[index].profile_image_location==''">-->
+           @if($user->profile_image_location=='')
+             <img src="{{ Gravatar::get($user->email) }}" alt="">
+           @else
+             <img src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+           @endif
+           </div>
+        </a>  
+          <span v-text="m.message"></span>
+      </li>
+    </section>
+ </div>
+</ul>
+
+  <form enctype="multipart/form-data" @submit.prevent="send" class="bg-light">
+    <div class="input-group">
+      <input
+        type="text"
+        placeholder="Type a message"
+        aria-describedby="button-addon2"
+        class="form-control rounded-0 border-0 py-4 bg-light"
+        v-model="text"
+      />
+      <div class="input-group-append">
+        <button type="submit">送信</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+<script>
+  new Vue({
+    el: "#chat",
+    data: {
+      messages: [],
+      text: "",
+      shopId:"{{$chatroom->first()->shop_id}}",
+      userId: "{{Auth::id()}}",
+      roomId: "{{$chatroom->id}}",
+    },
+    methods: {
+      getMessages() {
+        
+        axios.get(`/chat/${this.roomId}/show`).then((res) => {
+          // propsで渡されたmessagesをarrayに入れている
+          this.messages = res.data;
+          console.log(this.messages);
+          console.log('aaaaa');
+        });
+      },
+      send() {
+     
+        let obj = {
+          message:this.text,
+          user_id:this.userId,
+          shop_id:this.shopId,
+        };
+       console.log(`/chat/${this.roomId}/store`);
+        axios
+          .post(`/chat/${this.roomId}/store`,obj)
+          .then((res) => {
+            this.getMessages();
+            this.text="";
+  
+            console.log('sss');
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+    },
+    mounted() {
+
+    this.getMessages();
+
+   }
+  });
+</script>
 @endsection 

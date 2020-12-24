@@ -35,6 +35,7 @@ Route::get('shops/{id}/phpto_delete','ShopsController@photo_delete')->name('shop
 
 //chat
 Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
+Route::get('chat/{id}/view', 'ChatController@view')->name('chat.view');
 Route::post('chat/{id}/store', 'ChatController@store')->name('chat.store');
 Route::get('chat/{id}/create_chatroom', 'ChatController@create_chatroom')->name('chat.create_chatroom');
 Route::get('chat/user_index', 'ChatController@user_index')->name('chat.user_index');
@@ -51,6 +52,7 @@ Route::get('gallery/{id}/destroy', 'GallerysController@destroy')->name('gallery.
 Route::post('favorites/{id}/favoite', 'FavoritesController@store')->name('favorites.favorite');
 Route::delete('favorites/{id}/unfavorite', 'FavoritesController@destroy')->name('favorites.unfavorite');
 Route::get('favorites/index', 'FavoritesController@index')->name('favorites.index');
+Route::get('favorites/{id}/check', 'FavoritesController@like_check');
 });
 
 
