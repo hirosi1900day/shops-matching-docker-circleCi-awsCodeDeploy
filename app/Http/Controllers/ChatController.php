@@ -9,7 +9,7 @@ use App\Chatmessage;
 use App\User;
 use App\Shop;
 use Auth;
-
+use App\Events\MessageCreated;
 
 class ChatController extends Controller
 {
@@ -86,13 +86,16 @@ class ChatController extends Controller
         //user_idでメッセージ送信者を特定する
         //shop_idでどのショップに対する内容かを特定する
         //これらはinput hiddenで送信する
-       Chatroom::findOrFail($id)->message()->create([
+       $message = Chatroom::findOrFail($id)->message()->create([
           'user_id'=>$request->user_id,
           'shop_id'=>$request->shop_id,
           'chatroom_id'=>$id,
           'message'=>$request->message,
            ]);
-        return redirect(route('chat.show', ['id' => $id]));
+           
+         
+          return ;
+        // redirect(route('chat.show', ['id' => $id]));
    
    }
    public function user_index(){

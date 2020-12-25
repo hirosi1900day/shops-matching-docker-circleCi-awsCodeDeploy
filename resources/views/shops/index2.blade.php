@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('loading')
+ @include('loading')
 
 <div class="background-skyblue">
     <h1>shop一覧</h1>
@@ -29,46 +29,41 @@
     <div id="favorite">  
     @if (count($shops) > 0)
      @foreach ($shops as $index=>$shop)
-       <div class="row shops-index-container shadow">
-            <aside class="col-sm-2 margin">
+       <div class="shops-index-container shadow">
+           
                 
-                    <div>
-                        <div>
-                            <h3 class="center">{{ $shop->user->name }}</h3>
-                        </div>
-                        <div class="center">
-                            @if($shop->user->profile_image_location=='')
-                                <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
-                            @else
-                                <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
-                            @endif
-                       </div>
-                    </div>
+                    
+                      
+             <div>
+                @if($shop->user->profile_image_location=='')
+                    <img class="user-profile-image center" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                @else
+                    <img class="user-profile-image center" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
+                @endif
+            </div>
+                            
+                       
+                    
                     
                
-            </aside>
-           <div class="col-sm-10">
+           
+           <div class="grid-shop-index">
              
+                <div><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
+                <div>
+                    <div class="form-name">店舗名</div><div class="text">{{$shop->name}}</div>
+                    <div class="form-name">都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
+                    <div class="form-name">貸出可能時間</div><div class="text">{{$shop->free_time}}</div>
+                    <div class="form-name">店舗の種類</div><div class="text">{{ $shop_type_array[$shop->shop_type]}}</div>
                 
-                <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
-                <div>店舗名</div><div class="text">{{$shop->name}}</div>
-                <div>都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
-                <div>貸出可能時間</div><div class="text">{{$shop->free_time}}</div>
-                <div>店舗の種類</div><div class="text">{{ $shop_type_array[$shop->shop_type]}}</div>
-                <!--@php-->
-                <!--dd($shop->user_id);-->
-                <!--@endphp-->
-                @if($shop->user_id!=Auth::user()->id)
-                
-                <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
-                
-                    <span>店舗情報詳細へ</span>
-                </a>
-                
-                
-                 <like :shop-id="{{$shop->id}}"></like>
-              
-             　
+                    @if($shop->user_id!=Auth::user()->id)
+                        <div class="flex-favorite">
+                           <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
+                              <span>店舗情報詳細へ</span>
+                           </a>
+                           <like :shop-id="{{$shop->id}}" class="favorite"></like>
+                        </div>
+             　 </div>
               @endif
            
             </div>
@@ -88,8 +83,8 @@
   const buttonPreference = {
   template: `
     <div>
-       <button v-if="status == false" type="button" @click.prevent="like" class="btn btn-outline-warning">Like</button>
-       <button v-else type="button" @click.prevent="unlike" class="btn btn-warning">Liked</button>
+       <div v-if="status == false" type="button" @click.prevent="like" ><div><i class="far fa-star"></i></div></div>
+       <div v-else type="button" @click.prevent="unlike"><div><i class="fas fa-star"></i></div></div>
     </div>
   `,
   props: ['shopId'],  

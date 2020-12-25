@@ -1,9 +1,10 @@
 .shops-index-image{
-    width:40vw;
+    width:90%;
     object-fit: cover;
     border-radius: 5px;
   
 }
+
 .shop-image{
     width:90%;
     height:30vh;
@@ -28,8 +29,15 @@
     height: 4vh;
     width: 4vw;
 }
-
-
+.flex-favorite{
+    display: flex;
+    justify-content:space-between;
+}
+.favorite{
+    width: 1vw;
+    height: 1vw;
+    margin:2vw;
+}
 .shop-img{
     width: 50%;
     border-radius: 5%;

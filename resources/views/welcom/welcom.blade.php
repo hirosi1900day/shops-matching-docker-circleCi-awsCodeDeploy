@@ -5,17 +5,19 @@
         <title>Shops Matchig</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker rel="stylesheet">
         <link href="{{ secure_asset('css/welcome.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
     </head>
 
     <body>
-       
+    
 
    
    
     @include('commons.navbar')
+    @include('loading')
 <div class="background-skyblue">
   <section>
         
@@ -61,72 +63,71 @@
         
  </section>
  <section id="middle">
+      
  <p>新着店舗</p>
+ <div class="container-welcome">
  @foreach($shops_new as $shop)
-   
-        <div class="row shops-index-container shadow">
+     
+        <div class="shops-index-container shadow">
            <a href="{{route('shops.show',['shop'=>$shop->id])}}">
-            <div class="col-10 ">
-             
-                
+            <div>
                 <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
-                <div class="card-body-font card_flex">
-                   <div><div class="font-bold">都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div></div>
-                   <div><div class="font-bold">店舗の種類</div><div class="text">{{ $shop_type_array[$shop->shop_type]}}</div></div>
+                <div class="card-body-font card-grid-set">
+                    <div class="text-left">
+                        <p class="user-name center">{{ $shop->user->name }}</p>
+                        @if($shop->user->profile_image_location=='')
+                            <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                        @else
+                            <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
+                        @endif
+                    </div>
+                    <div class="line-height-center">   
+                       <div class="card-body-font font-bold card-body-font line-height-center">都道府県:</div>
+                       <div class="text card-body-font line-height-center">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
+                    </div> 
+                    <div class="line-height-center">
+                       <div class="card-body-font card-body-font line-height-center">店舗種類:</div>
+                       <div class="text card-body-font line-height-center">{{ $shop_type_array[$shop->shop_type]}}</div>
+                    </div>
                 </div>
                    
-          </a>
-            </div>
-            <aside class="col-2 margin">
-                
-                    <div class="card_flex">
-                       
-                        <div class="center">
-                            @if($shop->user->profile_image_location=='')
-                                <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
-                            @else
-                                <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
-                            @endif
-                       </div>
-                       <div>
-                            <h3 class="center">{{ $shop->user->name }}</h3>
-                       </div>
-                    </div>
-                    
-               
-            </aside>
+           </a>
         </div>
-   
+
+    </div>
+     
  @endforeach
+    </div>
  <p>おすすめ店舗</p>
+ <div class="container-welcome">
  @foreach($shop_favorite as $shop)
-   
-       <div class="row shops-index-container shadow">
+   <div class="shops-index-container shadow">
            <a href="{{route('shops.show',['shop'=>$shop->id])}}">
-           <div class="col-10">
+               <div>
                 <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
-                <div class="font-bold">都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
-                <div class="font-bold">店舗の種類</div><div class="text">{{ $shop_type_array[$shop->shop_type]}}</div>
-            </div>
-            </a>
-            <aside class="col-2 margin">
-                    <div class="card_user_image card_flex">
-                        <div class="center">
-                            @if($shop->user->profile_image_location=='')
-                                <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
-                            @else
-                                <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
-                            @endif
-                       </div>
-                       <div>
-                            <h3 class="center">{{ $shop->user->name }}</h3>
-                        </div>
+                <div class="card-body-font card-grid-set">
+                    <div class="text-left">
+                        <p class="user-name center">{{ $shop->user->name }}</p>
+                        @if($shop->user->profile_image_location=='')
+                            <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                        @else
+                            <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
+                        @endif
                     </div>
-                
-            </aside>
+                    <div class="line-height-center">   
+                       <div class="font-bold card-body-font line-height-center">都道府県:</div>
+                       <div class="text line-height-center">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
+                    </div> 
+                    <div class="line-height-center">
+                       <div class="font-bold card-body-font line-height-center">店舗種類:</div>
+                       <div class="text line-height-center">{{ $shop_type_array[$shop->shop_type]}}</div>
+                    </div>
+                </div>
+           </a>
         </div>
-   
+    </div>
  @endforeach
+ </div>
  </section>
  </div>
         
@@ -140,6 +141,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+        <script src="{{ secure_asset('/js/loading.js') }}"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
         <script type="text/javascript">
       var swiper = new Swiper('.swiper-container',{
