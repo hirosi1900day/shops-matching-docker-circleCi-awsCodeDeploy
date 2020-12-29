@@ -8,13 +8,10 @@ use App\User;
 class FavoritesController extends Controller
 {
     public function store($id){
-         
         \Auth::user()->favorite($id);
-        
         // 前のURLへリダイレクトさせる
         return;
         // redirect(route('shops.index'));
-        
     }
     
     public function destroy($id){

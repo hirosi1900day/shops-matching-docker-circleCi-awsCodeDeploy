@@ -46,21 +46,22 @@
                     </p>
                 </section>
                 <section v-show="activeTab === 'tabs-2'" class="background-gray-non-border">
+                   <div class="users-show-shop">
                     @if(count($user->shops()->get())>0) 
                      @foreach($user->shops()->get() as $shop)
-                     <div class="users-show-shop">
+                     
                         店舗名：{{$shop->name}}</br>
                         店舗画像</br>
 
                         <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image"></div>
                         店舗紹介：</br>
                         {{$shop->shop_introduce}}
-                     </div>
+                     
                      @endforeach 
                     @else
                     <p>店舗がありません</p>
                     @endif
-
+                   </div>
                 </section>
             </section>
         </div>

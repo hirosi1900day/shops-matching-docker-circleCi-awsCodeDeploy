@@ -2,7 +2,7 @@
 
 @section('content')
 
- @include('loading')
+
 
 <div class="background-skyblue">
     <h1>shop一覧</h1>
@@ -21,14 +21,16 @@
         {!! Form::label('shop_type_id', '店舗ジャンル') !!}
         {!! Form::select('shop_type',['選択してください','居酒屋','カフェ',
         '事務所','その他',],0,['class'=>'form-control']) !!}
+    </div>
     <div>
-   
        {!! Form::submit('絞り込む',['class'=>'btn btn-info']) !!}
        {!! Form::close() !!}   
     </div>
+ </div>
     <div id="favorite">  
     @if (count($shops) > 0)
-     @foreach ($shops as $index=>$shop)
+      
+      @foreach ($shops as $index=>$shop)
        <div class="shops-index-container shadow">
            
                 
@@ -63,18 +65,19 @@
                            </a>
                            <like :shop-id="{{$shop->id}}" class="favorite"></like>
                         </div>
-             　 </div>
+             　 
               @endif
-           
-            </div>
-    </div>
-              
-    @endforeach  
+              </div>
+           </div>
+    
+       </div>        
+    @endforeach 
+   
     @else
     <div>店舗がありません</div>
     @endif
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 

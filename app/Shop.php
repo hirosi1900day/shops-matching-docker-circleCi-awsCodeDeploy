@@ -25,5 +25,9 @@ class Shop extends Model
     {
         return $this->belongsToMany(User::class, 'favorites', 'shop_id', 'user_id')->withTimestamps();
     }
+    public function tags()
+   {
+       return $this->belongsToMany(Tag::class, 'shop_tags','shop_id','tag_id')>withTimestamps();
+   }
     
 }

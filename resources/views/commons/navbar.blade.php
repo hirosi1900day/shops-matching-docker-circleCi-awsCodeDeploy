@@ -27,7 +27,9 @@
 　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('shops.index', 'ショップ一覧',) !!}</li>
 　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('favorites.index', 'お気に入り一覧',) !!}</li>
 　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('chat.user_index', '取引メッセージ',) !!}</li>
-　　　　　　　          
+　　　　　　　              <li class="dropdown-item">{!! link_to_route('recruit.create', '募集作成',) !!}</li>
+　　　　　　　              <li class="dropdown-item">{!! link_to_route('recruit.show', 'Myrecruit',) !!}</li>
+　　　　　　　              <li class="dropdown-item">{!! link_to_route('recruit.index', '募集一蘭',) !!}</li>
                             <li class="dropdown-divider"></li>
                             {{-- ログアウトへのリンク --}}
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>

@@ -23,6 +23,10 @@
         {!! Form::label('free_time', '店舗貸し出し可能時間') !!}
         {!! Form::text('free_time',old('free_time'),['class'=>'form-control']) !!}
     </div>
+     <div class='form-group'>
+        {!! Form::label('tag', 'タグの追加(上書き）') !!}
+        {!! Form::text('tag',old('#の形で表示'),['class'=>'form-control']) !!}
+    </div>
     <div class='form-group'>
         {!! Form::label('shop_type', '店舗ジャンル') !!}
         {!! Form::select('shop_type',['選択してください','居酒屋','カフェ',

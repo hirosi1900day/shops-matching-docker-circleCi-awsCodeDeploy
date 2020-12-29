@@ -57,14 +57,7 @@
     margin:0;
     padding:0;
 }
-.text{
-    margin:2vh 2vw;
-    padding:0;
-    background:white;
-    font-size:3px;
-    border:solid 1px black;
-    border-radius:3px;
-}
+
 .users-show-shop{
     /*border:1px solid black;*/
     margin-top:4vh;

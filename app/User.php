@@ -47,6 +47,10 @@ class User extends Authenticatable
     public function user_message(){
         return $this->hasMany(Chatmessage::class);
     }
+    public function recruit(){
+        return $this->hasMany(Recruit::class);
+    }
+    //お気にいり機能
     public function favorites()
     {
         return $this->belongsToMany(Shop::class, 'favorites', 'user_id', 'shop_id')->withTimestamps();
@@ -57,25 +61,49 @@ class User extends Authenticatable
     public function favorite($shopId){
         // すでにお気に入りしているかの確認
         $exist = $this->is_favorite($shopId);
-        
-
         if ($exist) {
             // すでにお気に入りしていれば何もしない
             return false;
         } else {
-            // 未フォローであればフォローする
             $this->favorites()->attach($shopId);
             return true;
         }
     } 
     
     public function unfavorite($shopId){
-         // すでにフォローしているかの確認
         $exist = $this->is_favorite($shopId);
+        if ($exist) {
+            $this->favorites()->detach($shopId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //募集機能
+    public function recruits(){
+        return $this->belongsToMany(Recruit::class,'recruits_users','user_id','recruit_id')->withTimestamps();
+    }
+    public function is_recruiting($recruitId)
+    {
+        // フォロー中ユーザの中に $userIdのものが存在するか
+        return $this->recruits()->where('recruit_id', $recruitId)->exists();
+    }
+    public function recruit_match($recruitId){
+        $exist = $this->is_recruiting($recruitId);
+        if ($exist) {
+            // すでにお気に入りしていれば何もしない
+            return false;
+        } else {
+            $this->recruits()->attach($recruitId);
+            return true;
+        }
+    }
+    public function recruit_match_delete($recruitId){
+        $exist = $this->is_recruiting($recruitId);
         
         if ($exist) {
             // すでにフォローしていればフォローを外す
-            $this->favorites()->detach($shopId);
+            $this->recruits()->detach($recruitId);
             return true;
         } else {
             // 未フォローであれば何もしない

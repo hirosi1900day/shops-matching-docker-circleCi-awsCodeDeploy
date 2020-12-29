@@ -9,6 +9,10 @@
         {!! Form::text('name',old('name'),['class'=>'form-control']) !!}
     </div>
     <div class='form-group'>
+        {!! Form::label('tags', 'タグ') !!}
+        {!! Form::text('tags',old('#の形で記入して'),['class'=>'form-control']) !!}
+    </div>
+    <div class='form-group'>
         {!! Form::label('shop_location_prefecture', '都道府県') !!}
         {!! Form::select('shop_location_prefecture',config('const.prefecture_array'),0,['class'=>'form-control']) !!}
     </div>

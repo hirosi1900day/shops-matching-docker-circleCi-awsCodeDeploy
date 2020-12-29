@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Shop;
+use App\Tag;
 use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
@@ -14,8 +15,7 @@ class ShopsController extends Controller
          $shop_favorite=Shop::withCount('favorite_users')->orderBy('favorite_users_count', 'desc')
          ->limit(4)
          ->get();
-         
-         
+ 
          $prefecture_array=config('const.prefecture_array');
         
          $shop_type_array=config('const.shop_type_array');
@@ -56,17 +56,11 @@ class ShopsController extends Controller
         'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048','required',],
         
        ]);
-        // if(count($request->user()->shops()->get())>=1)
-        // {
-        //  $error='店舗は１店舗のみしか登録できません';
-        //     return view('error.error',['error'=>$error]);
-        // }
+       
         if($file = $request->image_location){
         //保存するファイルに名前をつける    
         $fileName = time().'.'.$file->getClientOriginalExtension();
-        //Laravel直下のpublicディレクトリに新フォルダをつくり保存する
-        // $target_path = public_path('/uploads/');
-        // $file->move($target_path,$fileName);
+        
         $path = Storage::disk('s3')->putFileAs('/',$file, $fileName,'public');
        
     }else{
@@ -83,9 +77,23 @@ class ShopsController extends Controller
         'shop_type'=>$request->shop_type,
         'shop_introduce'=>$request->shop_introduce,
    ]);
-    return redirect(route('shops.index'));
-       
-       
+      
+      preg_match_all('/#([a-zA-Z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
+      $tags = [];
+      
+      // $matchの中でも#が付いていない方を使用する(配列番号で言うと1)
+      foreach($match[1] as $tag) {
+          // firstOrCreateで重複を防ぎながらタグを作成している。
+          $record = Tag::firstOrCreate(['name' => $tag]);
+          array_push($tags, $record);
+      }
+
+      $tags_id = [];
+      foreach($tags as $tag) {
+          array_push($tags_id, $tag->id);
+      }
+        $request->user()->shops()->orderBy('created_at', 'desc')->first()->tags()->attach($tags_id);
+        return redirect(route('shops.index'));
     }
     
    
@@ -137,7 +145,6 @@ class ShopsController extends Controller
         
         // idの値でshopを検索して取得
         $shop = Shop::findOrFail($id);
-
         // メッセージ編集ビューでそれを表示
         return view('shops.edit', [
             'shop' => $shop,
@@ -170,6 +177,24 @@ class ShopsController extends Controller
              $shop->shop_type=$request->shop_type;
         }
         $shop->shop_introduce=$request->shop_introduce;
+        $shop->save();
+        preg_match_all('/#([a-zA-Z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tag, $match);
+        $before = [];
+        foreach($shop->tags()->get() as $tag){
+           array_push($before, $tag->name);
+        }
+        $after = [];
+        foreach($match[1] as $tag){
+           // 普通に新しいのが来たら新規作成する動き
+           $record = Tag::firstOrCreate(['name' => $tag]);
+           array_push($after, $record);
+        }
+ 
+        $tags_id = [];
+        foreach($after as $tag) {
+            array_push($tags_id, $tag->id);
+        }
+        $shop->tags()->sync($tags_id);
         $shop->save();
         return redirect(route('mypage.shop'));
     }

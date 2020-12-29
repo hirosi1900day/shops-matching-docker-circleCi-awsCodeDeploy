@@ -53,6 +53,18 @@ Route::post('favorites/{id}/favoite', 'FavoritesController@store')->name('favori
 Route::delete('favorites/{id}/unfavorite', 'FavoritesController@destroy')->name('favorites.unfavorite');
 Route::get('favorites/index', 'FavoritesController@index')->name('favorites.index');
 Route::get('favorites/{id}/check', 'FavoritesController@like_check');
+
+//募集
+Route::get('recruit/create', 'RecruitController@create')->name('recruit.create');
+Route::post('recruit/store', 'RecruitController@store')->name('recruit.store');
+Route::get('recruit/index', 'RecruitController@index')->name('recruit.index');
+Route::get('recruit/show', 'RecruitController@show')->name('recruit.show');
+//募集マッチング
+Route::post('recruit/{id}/match', 'RecruitController@recruit_match')->name('recruit.match');
+Route::delete('recruit/{id}/match_delete', 'RecruitController@match_delete')->name('recruit.match_delete');
+Route::get('recruit/{id}/match_index', 'RecruitController@match_index')->name('recruit.match_index');
+
+
 });
 
 

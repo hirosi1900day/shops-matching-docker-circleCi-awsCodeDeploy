@@ -70,31 +70,30 @@
      
         <div class="shops-index-container shadow">
            <a href="{{route('shops.show',['shop'=>$shop->id])}}">
-            <div>
-                <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
-                <div class="card-body-font card-grid-set">
-                    <div class="text-left">
-                        <p class="user-name center">{{ $shop->user->name }}</p>
-                        @if($shop->user->profile_image_location=='')
-                            <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
-                        @else
-                            <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
-                        @endif
-                    </div>
-                    <div class="line-height-center">   
-                       <div class="card-body-font font-bold card-body-font line-height-center">都道府県:</div>
-                       <div class="text card-body-font line-height-center">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
-                    </div> 
-                    <div class="line-height-center">
-                       <div class="card-body-font card-body-font line-height-center">店舗種類:</div>
-                       <div class="text card-body-font line-height-center">{{ $shop_type_array[$shop->shop_type]}}</div>
+               <div>
+                    <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
+                    <div class="text"><div>ショップ情報</div>{{substr($shop->shop_introduce,0,20)}}</div>
+                    <div class="card-body-font card-grid-set container-position">
+                        <div class="text-left">
+                            <p class="user-name center">{{ $shop->user->name }}</p>
+                            @if($shop->user->profile_image_location=='')
+                                <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                            @else
+                                <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
+                            @endif
+                        </div>
+                        <div class="line-height-center">   
+                           <div class="card-body-font font-bold card-body-font line-height-center">都道府県:</div>
+                           <div class="text card-body-font line-height-center">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
+                        </div> 
+                        <div class="line-height-center">
+                           <div class="card-body-font card-body-font line-height-center">店舗種類:</div>
+                           <div class="text card-body-font line-height-center">{{ $shop_type_array[$shop->shop_type]}}</div>
+                        </div>
                     </div>
                 </div>
-                   
-           </a>
+           </a> 
         </div>
-
-    </div>
      
  @endforeach
     </div>
@@ -102,9 +101,11 @@
  <div class="container-welcome">
  @foreach($shop_favorite as $shop)
    <div class="shops-index-container shadow">
-           <a href="{{route('shops.show',['shop'=>$shop->id])}}">
-               <div>
-                <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
+        <a href="{{route('shops.show',['shop'=>$shop->id])}}">
+               
+            <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
+            <div class="text"><div>ショップ情報</div>{{substr($shop->shop_introduce,0,20)}}</div>
+            <div class="container-position">
                 <div class="card-body-font card-grid-set">
                     <div class="text-left">
                         <p class="user-name center">{{ $shop->user->name }}</p>
@@ -115,16 +116,17 @@
                         @endif
                     </div>
                     <div class="line-height-center">   
-                       <div class="font-bold card-body-font line-height-center">都道府県:</div>
-                       <div class="text line-height-center">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
+                        <div class="font-bold card-body-font line-height-center">都道府県:</div>
+                        <div class="text line-height-center">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
                     </div> 
                     <div class="line-height-center">
-                       <div class="font-bold card-body-font line-height-center">店舗種類:</div>
-                       <div class="text line-height-center">{{ $shop_type_array[$shop->shop_type]}}</div>
+                        <div class="font-bold card-body-font line-height-center">店舗種類:</div>
+                        <div class="text line-height-center">{{ $shop_type_array[$shop->shop_type]}}</div>
                     </div>
                 </div>
-           </a>
-        </div>
+            </div>
+        </a>
+        
     </div>
  @endforeach
  </div>
