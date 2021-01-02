@@ -1,47 +1,77 @@
-<header >
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        {{-- トップページへのリンク --}}
-        <a class="navbar-brand" href="/">Microposts</a>
+<header>
+    
+    
+    <!-- ナビゲーションバー -->
+    <nav class="navbar fixed-top navbar-expand-xl navbar-light bg-color">
+      <div class="container-fluid">
 
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
-            <span class="navbar-toggler-icon"></span>
+        <!-- ホームリンク -->
+        <a href="#" class="navbar-brand" aria-label="ホーム">
+          <i class="fas fa-paw" aria-hidden="true"></i>
+        </a>
+
+        <!-- 画面幅が狭い時に表示されるハンバーガーメニュー -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+          aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="nav-bar">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-              <div class="collapse navbar-collapse" id="nav-bar">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                @if (Auth::check())
-                    {{-- ユーザ一覧ページへのリンク --}}
-                    <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            {{-- ユーザ詳細ページへのリンク --}}
-                     　      <li class="dropdown-item">{!! link_to_route('users.show', 'MyPage', ['user' => Auth::id()]) !!}</li>
-                          　 {{-- 店舗作成へのリンク--}}
-                            <li class="dropdown-item">{!! link_to_route('shops.create', 'ショップ作成',) !!}</li>
-                            <li class="dropdown-item">{!! link_to_route('mypage.shop', 'Myshop',) !!}</li>
-　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('shops.index', 'ショップ一覧',) !!}</li>
-　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('favorites.index', 'お気に入り一覧',) !!}</li>
-　　　　　　　          　　<li class="dropdown-item">{!! link_to_route('chat.user_index', '取引メッセージ',) !!}</li>
-　　　　　　　              <li class="dropdown-item">{!! link_to_route('recruit.create', '募集作成',) !!}</li>
-　　　　　　　              <li class="dropdown-item">{!! link_to_route('recruit.show', 'Myrecruit',) !!}</li>
-　　　　　　　              <li class="dropdown-item">{!! link_to_route('recruit.index', '募集一蘭',) !!}</li>
-                            <li class="dropdown-divider"></li>
-                            {{-- ログアウトへのリンク --}}
-                            <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
-                        </ul>
-                    </li>
-                @else
-                    {{-- ユーザ登録ページへのリンク --}}
-                    <li class="nav-item">{!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}</li>
-                    {{-- ログインページへのリンク --}}
-                    <li class="nav-item">{!! link_to_route('login', 'Login', [], ['class' => 'nav-link']) !!}</li>
-                @endif
-            </ul>
+        <!-- メニュー -->
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Top</a>
+            </li>
+            @if(Auth::check())
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('users.show',['user' => Auth::id()])}}">MyPage</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('shops.create')}}">ショップ作成</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('chat.help_view')}}">ヘルプぼっと</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('mypage.shop')}}">Myshop</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('shops.index')}}">ショップ一蘭</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('favorites.index')}}">お気に入り一覧</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('chat.user_index')}}">取引メッセージ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('recruit.create')}}">募集作成</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('recruit.user_show')}}">Myrecruit</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('recruit.index')}}">募集一覧</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('logout.get')}}">Logout</a>
+            </li>
+            @else
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('signup.get')}}">signup</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{route('login')}}">login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('chat.help_view')}}">ヘルプぼっと</a>
+            </li>
+            @endif
+          </ul>
         </div>
-     </nav>
+        <!--/.nav-collapse -->
+      </div>
+      <!--/.container-fluid -->
+    </nav>
+
 </header>

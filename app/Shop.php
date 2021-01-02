@@ -27,7 +27,7 @@ class Shop extends Model
     }
     public function tags()
    {
-       return $this->belongsToMany(Tag::class, 'shop_tags','shop_id','tag_id')>withTimestamps();
+       return $this->belongsToMany(Tag::class, 'shop_tags','shop_id','tag_id')->withTimestamps();
    }
     
 }

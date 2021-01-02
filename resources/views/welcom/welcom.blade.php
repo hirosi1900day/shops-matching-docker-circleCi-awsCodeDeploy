@@ -12,16 +12,25 @@
     </head>
 
     <body>
-    
-
-   
-   
+<div id="welcome-load">
     @include('commons.navbar')
-    @include('loading')
+    
+   
 <div class="background-skyblue">
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+   {!! Form::open(['route'=>'shops.serch_tag_index','enctype'=>'multipart/form-data']) !!}
+    <div class='form-group'>
+        {!! Form::label('tags', 'タグで店舗を検索する（#~~の形で記入、複数検索可能）') !!}
+        {!! Form::text('tags',old('tags'),['class'=>'form-control']) !!}
+    </div>
+        {!! Form::submit('検索する',['class'=>'btn btn-info']) !!}
+        {!! Form::close() !!}   
   <section>
-        
-        
+      
      <section class="swiper">
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -63,7 +72,29 @@
         
  </section>
  <section id="middle">
-      
+ <p>募集</p>
+ <div class="container-welcome-recruit">
+    @foreach($recruits as $recruit)
+        <div class="shops-index-container shadow">
+           <a href="{{route('recruit.show',['id'=>$recruit->id])}}">
+                <div>
+                    <div class="text"><div>募集タイトル</div>{{substr($recruit->title,0,20)}}</div>
+                    <div class="text"><div>募集内容</div>{{substr($recruit->content,0,20)}}</div>
+                    <div class="card-body-font card-grid-set container-position">
+                        <div class="text-left">
+                            <p class="user-name center">{{ $recruit->user->name }}</p>
+                            @if($recruit->user->profile_image_location=='')
+                                <img class="user-profile-image" src="{{ Gravatar::get($recruit->user->email) }}" alt="">
+                            @else
+                                <img class="user-profile-image" src="{{Storage::disk('s3')->url($recruit->user->profile_image_location)}}" alt="">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+           </a> 
+        </div>
+    @endforeach
+ </div> 
  <p>新着店舗</p>
  <div class="container-welcome">
  @foreach($shops_new as $shop)
@@ -92,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-           </a> 
+            </a>
         </div>
      
  @endforeach
@@ -130,22 +161,33 @@
     </div>
  @endforeach
  </div>
+ <a href="{{route('chat.help_view')}}"><div class="footer-help-botton">ヘルプ</div></a>
+ <div class="message-popup">操作方法で困った際は</br>
+                            右側のヘルプボタンをクリックしよう！</br>
+                            </div>
  </section>
- </div>
-        
-        
-
     
- 
-       
- 
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-        <script src="{{ secure_asset('/js/loading.js') }}"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
-        <script type="text/javascript">
+ </div>
+ <footer>
+    <div class="footer-bar">
+        <div class=footer-title>あ��たの理想の店舗見つけて、</br>
+                             起業家になろう
+         </div>
+    <div>
+    <div class="footer-bottom">
+        &copy; 2020 shopmatching
+    </div>
+    
+ </footer>
+</div>
+
+   @include('loading')
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="{{ secure_asset('/js/loading.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+    <script type="text/javascript">
       var swiper = new Swiper('.swiper-container',{
       speed: 1000, // スピード設定 1000=1秒
       autoplay: true, // 自動切り替え trueで有効 falseで無
@@ -158,6 +200,7 @@
         el: '.swiper-pagination', // ページネーションを表示する要素指定
       }
     });
-    </script>      
+    
+　　</script>      
    </body>
 </html>

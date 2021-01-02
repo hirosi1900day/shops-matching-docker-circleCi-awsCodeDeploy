@@ -11,11 +11,36 @@ body{
     min-height: 40vh;
 
 }
+.nav-item{
+  margin:5px;
+}
+.nav-link{
+    color:white !important;
+}
+.nav-link:hover{
+  opacity: 0.5;
+}
+.bg-color{
+    background-color:#13b1c0;
+}
+.footer-help-botton{
+  width: 70px;
+  height:70px;
+  background: #13b1c0;
+  color: white;
+  border-radius: 50%;
+  position: fixed;
+  right:40px;
+  bottom:40px;
+  text-align: center;
+  line-height: 70px;
+  font-weight: bold;
+}
 .text{
-    margin:2vh 2vw;
+    margin:2px 2px;
     padding:0;
     background:white;
-    font-size:6px;
+    font-size:14px;
     border-radius:3px;
 }
 .text-title{
@@ -90,7 +115,8 @@ body{
 .button{
     background:#13b1c0;;
     color:white;
-    margin:1vh;
+    padding:4px 5px;
+    margin:4px;
     border-radius:5px;
     
 }
@@ -104,11 +130,8 @@ body{
 .button-delete{
     background:red;
     color:white;
-    padding:1vh 1.5vw;
-    margin:1vh;
+    padding:4px 5px;
+    margin:4px;
     border-radius:5px;
 }
 
-@media (min-width: 400px) {
-
-}

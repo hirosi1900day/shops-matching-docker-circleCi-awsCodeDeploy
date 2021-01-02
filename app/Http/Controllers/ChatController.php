@@ -93,7 +93,7 @@ class ChatController extends Controller
           'message'=>$request->message,
            ]);
            
-         
+     
           return ;
         // redirect(route('chat.show', ['id' => $id]));
    
@@ -120,5 +120,33 @@ class ChatController extends Controller
    public function message_redirect($id){
         return redirect(route('chat.show', ['id' => $id]));  
     }
-   
+   public function help_view(){
+       $help_question=['A=>店舗作成方法,B=>募集方法,C=>館員登録方法'];
+       return view('chat.show_help',['help_question'=>$help_question]);
+   }
+   public function store_help(Request $request){
+        
+        $input_question=$request->help_message;
+        $help_message=[];
+        switch ($request->help_message) {
+            case 'A':
+              $help_message=['0message'];
+              break;
+            case 'B':
+               $help_message=['1message'];
+               break;
+            case 'C':
+              $help_message=['2message'];
+               break;
+            default:
+               $help_message=['else'];
+        }
+         
+       
+        return [
+                'help_message'=>$help_message,
+                'input_question'=>$input_question
+               ];
+   }
+        
 }

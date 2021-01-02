@@ -19,12 +19,18 @@ class RecruitController extends Controller
     }
     public function index(){
         $recruits=Recruit::get();
+        
         return view('recruit.index',['recruits'=>$recruits]);
     }
-    public function show(){
+    public function show($id){
+        $recruit=Recruit::findOrFail($id);
+        return view('recruit.show',['recruit'=>$recruit]);
+        
+    }
+    public function user_show(){
         $user=\Auth::user();
         $recruits=$user->recruit()->orderBy('created_at', 'desc')->get();
-        return view('recruit.show',['recruits'=>$recruits]);
+        return view('recruit.user_show',['recruits'=>$recruits]);
     }
     public function recruit_match($id){
         //idはrecruit_id
@@ -35,7 +41,11 @@ class RecruitController extends Controller
     }
     public function match_delete($id){
          \Auth::user()->recruit_match_delete($id);
-         return back();
+         return ;
+    }
+    public function match_check($id){
+        $result=(string)\Auth::user()->is_recruiting($id);
+        return $result;
     }
     public function match_index($id){
         //idはrecruit id
@@ -48,7 +58,8 @@ class RecruitController extends Controller
             $shop=User::findOrFail($user_id)->shops()->get();
              array_push($shops,$shop);
         }
-        return view('recruit.match_index',['shops'=>$shops]);
+        return ;
+        // view('recruit.match_index',['shops'=>$shops]);
         
     }
     

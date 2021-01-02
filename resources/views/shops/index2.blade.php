@@ -31,43 +31,37 @@
     @if (count($shops) > 0)
       
       @foreach ($shops as $index=>$shop)
+       
        <div class="shops-index-container shadow">
-           
-                
-                    
-                      
-             <div>
+            <div>
                 @if($shop->user->profile_image_location=='')
                     <img class="user-profile-image center" src="{{ Gravatar::get($shop->user->email) }}" alt="">
                 @else
                     <img class="user-profile-image center" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
                 @endif
             </div>
-                            
-                       
-                    
-                    
-               
-           
            <div class="grid-shop-index">
              
                 <div><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
                 <div>
-                    <div class="form-name">店舗名</div><div class="text">{{$shop->name}}</div>
-                    <div class="form-name">都道府県</div><div class="text">{{$prefecture_array[$shop->shop_location_prefecture]}}</div>
-                    <div class="form-name">貸出可能時間</div><div class="text">{{$shop->free_time}}</div>
-                    <div class="form-name">店舗の種類</div><div class="text">{{ $shop_type_array[$shop->shop_type]}}</div>
+                    <div class="text-title">店舗名</div><div class="text">{{$shop->name}}</div>
+                    <div class="text-title">都道府県</div><div class="text">{{config('const.prefecture_array')[$shop->shop_location_prefecture]}}</div>
+                    <div class="text-title">貸出可能時間</div><div class="text">{{$shop->free_time}}</div>
+                    <div class="text-title">店舗の種類</div><div class="text">{{ config('const.prefecture_array')[$shop->shop_type]}}</div>
                 
                     @if($shop->user_id!=Auth::user()->id)
                         <div class="flex-favorite">
                            <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
                               <span>店舗情報詳細へ</span>
                            </a>
-                           <like :shop-id="{{$shop->id}}" class="favorite"></like>
+                           <a href="{{route('chat.create_chatroom',['id'=>$shop->id])}}" class="button">
+                               <span>メッセージへ</span>
+        　                  </a>
+                           <like :shop-id="{{$shop->id}}"></like>
                         </div>
              　 
-              @endif
-              </div>
+                    @endif
+                </div>
            </div>
     
        </div>        
@@ -77,17 +71,14 @@
     <div>店舗がありません</div>
     @endif
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-
+<script src="/js/app.js"></script>
 <script>
   
   const buttonPreference = {
   template: `
     <div>
-       <div v-if="status == false" type="button" @click.prevent="like" ><div><i class="far fa-star"></i></div></div>
-       <div v-else type="button" @click.prevent="unlike"><div><i class="fas fa-star"></i></div></div>
+       <div v-if="status == false" type="button" @click.prevent="like" class="button"><div>気になる</div></div>
+       <div v-else type="button" @click.prevent="unlike" class="button-delete"><div>気になるを解除する</div></div>
     </div>
   `,
   props: ['shopId'],  

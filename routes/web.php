@@ -12,7 +12,9 @@
 */
 
 Route::get('/','ShopsController@welcom');
-    
+//help_chat
+Route::post('chat/store_help', 'ChatController@store_help');
+Route::get('chat/help_view', 'ChatController@help_view')->name('chat.help_view');
 
 
 //ユーザー登録
@@ -32,7 +34,7 @@ Route::post('shops/narrow_down', 'ShopsController@narrow_down')->name('shops.nar
 Route::get('mypage_shop','ShopsController@mypage_shop')->name('mypage.shop');
 Route::get('shops/{id}/photo_app','ShopsController@photo_app')->name('shops.photo_app');
 Route::get('shops/{id}/phpto_delete','ShopsController@photo_delete')->name('shops.photo_delete');
-
+Route::post('shops/serch_tag_index', 'ShopsController@serch_tag_index')->name('shops.serch_tag_index');
 //chat
 Route::get('chat/{id}/show', 'ChatController@show')->name('chat.show');
 Route::get('chat/{id}/view', 'ChatController@view')->name('chat.view');
@@ -46,23 +48,22 @@ Route::get('gallery/{id}/create', 'GallerysController@create')->name('gallery.cr
 Route::post('gallery/{id}/store', 'GallerysController@store')->name('gallery.store');
 Route::get('gallery/{id}/showGallerys', 'GallerysController@showGallerys')->name('gallery.showGallerys');
 Route::get('gallery/{id}/destroy', 'GallerysController@destroy')->name('gallery.destroy');
-
 //favoite
- 
 Route::post('favorites/{id}/favoite', 'FavoritesController@store')->name('favorites.favorite');
 Route::delete('favorites/{id}/unfavorite', 'FavoritesController@destroy')->name('favorites.unfavorite');
 Route::get('favorites/index', 'FavoritesController@index')->name('favorites.index');
 Route::get('favorites/{id}/check', 'FavoritesController@like_check');
-
 //募集
 Route::get('recruit/create', 'RecruitController@create')->name('recruit.create');
 Route::post('recruit/store', 'RecruitController@store')->name('recruit.store');
 Route::get('recruit/index', 'RecruitController@index')->name('recruit.index');
-Route::get('recruit/show', 'RecruitController@show')->name('recruit.show');
+Route::get('recruit/user_show', 'RecruitController@user_show')->name('recruit.user_show');
+Route::get('recruit/{id}/show', 'RecruitController@show')->name('recruit.show');
 //募集マッチング
 Route::post('recruit/{id}/match', 'RecruitController@recruit_match')->name('recruit.match');
 Route::delete('recruit/{id}/match_delete', 'RecruitController@match_delete')->name('recruit.match_delete');
 Route::get('recruit/{id}/match_index', 'RecruitController@match_index')->name('recruit.match_index');
+Route::get('recruit/{id}/match_check', 'RecruitController@match_check');
 
 
 });

@@ -10,6 +10,6 @@ class Tag extends Model
     protected $fillable = ['name','tags_id'];
     public function shops()
    {
-       return $this->belongsToMany(Shop::class,'post_tags','tags_id','shop_id')>withTimestamps();
+       return $this->belongsToMany(Shop::class,'shop_tags','tag_id','shop_id')->withTimestamps();
    }
 }

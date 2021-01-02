@@ -39,7 +39,6 @@
                           <div id="target"></div>
                       </div>
                           
-              
                      <a href="{{route('chat.create_chatroom',['id'=>$shop->id])}}">
                          <span class="button">メッセージへ</span>
         　            </a>

@@ -5,38 +5,39 @@
  <ul class="messages">
   <div v-for="(m,index) in messages.messages">
 
-     
-
-   
     <section v-if="m.user_id == {{Auth::id()}}">
       <li class="right-side">
         <a class="chat_user_name" href="{{route('users.show',['user'=>Auth::id()])}}">
-          <span>{{Auth::user()->name}}</span>
-            <div class="pic">
-                @if(Auth::user()->profile_image_location=='')
-                    <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="">
-                @else
-                    <img src="{{Storage::disk('s3')->url(Auth::user()->profile_image_location)}}" alt="">
-                @endif
+            <div class="img-and-name">
+                <span>{{Auth::user()->name}}</span>
+                <div class="pic">
+                    @if(Auth::user()->profile_image_location=='')
+                        <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="">
+                    @else
+                        <img src="{{Storage::disk('s3')->url(Auth::user()->profile_image_location)}}" alt="">
+                    @endif
+                </div>
             </div>
-          <span v-text="m.message"></span>
+            <span v-text="m.message" class="chat_text"></span>
         </a>
       </li>
     </section>
     <section v-else>
       <li class="left-side">
         <a class="chat_user_name" href="{{route('users.show',['user'=>$user->id])}}">
-           <span v-text="messages.users[index].name"></span>
-           <div class="pic">
-           <!--<div v-if="messages.users[index].profile_image_location==''">-->
-           @if($user->profile_image_location=='')
-             <img src="{{ Gravatar::get($user->email) }}" alt="">
-           @else
-             <img src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
-           @endif
+           <div class="img-and-name">
+               <span v-text="messages.users[index].name"></span>
+               <div class="pic">
+                   <!--<div v-if="messages.users[index].profile_image_location==''">-->
+                   @if($user->profile_image_location=='')
+                       <img src="{{ Gravatar::get($user->email) }}" alt="">
+                   @else
+                       <img src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                   @endif
+               </div>
            </div>
         </a>  
-          <span v-text="m.message"></span>
+           <span v-text="m.message" class="chat_text"></span>
       </li>
     </section>
  </div>
@@ -56,10 +57,8 @@
       </div>
     </div>
   </form>
-  <button @click="getMessages" class="bg-light">更新</button>
+  <button @click="getMessages" class="button">メッセージを更新</button>
 </div>
-<!--<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>-->
 <script src="/js/app.js"></script>
 <script>
   new Vue({
@@ -103,10 +102,8 @@
       },
     },
     mounted() {
-
     this.getMessages();
-    
-   }
+    },
   });
 </script>
 @endsection 

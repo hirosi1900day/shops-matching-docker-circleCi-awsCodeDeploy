@@ -6,11 +6,9 @@
 
 .messages li {
   display: flex;
+  margin-bottom:10px;
 }
 
-.messages li + li {
-  margin-top: 4vh;
-}
 
 li.right-side {
   flex-direction: row-reverse;
@@ -18,22 +16,25 @@ li.right-side {
 
 .pic {
   /* background: pink; */
-  width: 7vw;
+  width: 50px;
   text-align: center;
 }
 .pic img {
-  width: 5vw;
-  height: 5vw;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 50%;
+}
+.chat-name{
+  text-align: center;
 }
 
 
 .chat_text {
   background: #fff;
   border-radius: 8px;
-  padding: 2vw 5vh;
-  max-width: 60%;
+  padding:15px 15px;
+  max-width: 92%;
   line-height: 1.8;
   position: relative;
 }
@@ -58,9 +59,29 @@ li.right-side {
   right: -16px;
   border-left-color: #fff;
 }
-.chat_user_name{
+.right-side .chat_user_name{
+  display: flex;
+  flex-direction: row-reverse;
+  color: black;
+}
+.left-side .chat_user_name{
+  display: flex;
   color: black;
 }
 .chat_user_name:hover{
   text-decoration: none;
+}
+.img-and-name{
+  margin:6px;
+  text-align: center;
+}
+@media (min-width: 400px) {
+  #chat{
+     margin:10px;
+  }
+}
+@media (min-width: 600px) {
+  #chat{
+     margin:20px;
+  }
 }

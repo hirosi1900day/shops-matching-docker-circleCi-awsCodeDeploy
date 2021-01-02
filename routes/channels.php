@@ -11,7 +11,7 @@
 |
 */
 
-Broadcast::channel('chat', function () {
+// Broadcast::channel('chat', function () {
     
-    return true;
-});
+//     return true;
+// });

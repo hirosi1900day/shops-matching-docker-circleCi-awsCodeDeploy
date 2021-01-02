@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Shop;
 use App\Tag;
+use App\Recruit;
 use Illuminate\Support\Facades\Storage;
 
 class ShopsController extends Controller
@@ -15,6 +16,7 @@ class ShopsController extends Controller
          $shop_favorite=Shop::withCount('favorite_users')->orderBy('favorite_users_count', 'desc')
          ->limit(4)
          ->get();
+         $recruits=Recruit::orderBy('created_at','desc')->limit(4)->get();
  
          $prefecture_array=config('const.prefecture_array');
         
@@ -25,19 +27,14 @@ class ShopsController extends Controller
                  'shop_favorite'=>$shop_favorite,
                  'prefecture_array'=>$prefecture_array,
                  'shop_type_array'=> $shop_type_array,
+                 'recruits'=>$recruits,
              ]);
      }
      public function index(){
         $shops = Shop::orderBy('created_at','desc')->get();
-        $prefecture_array=config('const.prefecture_array');
-        
-        $shop_type_array=config('const.shop_type_array');
-        
           // メッセージ一覧ビューでそれを表示
         return view('shops.index2', [
-            'shops' => $shops,
-            'prefecture_array'=>$prefecture_array,
-            'shop_type_array'=> $shop_type_array,
+            'shops' => $shops
         ]);
     }
     public function create(){
@@ -60,14 +57,11 @@ class ShopsController extends Controller
         if($file = $request->image_location){
         //保存するファイルに名前をつける    
         $fileName = time().'.'.$file->getClientOriginalExtension();
-        
         $path = Storage::disk('s3')->putFileAs('/',$file, $fileName,'public');
-       
     }else{
         //画像が登録されなかった時はから文字をいれる
         $name = "";
     }
-       
         $request->user()->shops()->create([
         'name'=>$request->name,
         'image_location'=>$fileName,
@@ -95,8 +89,19 @@ class ShopsController extends Controller
         $request->user()->shops()->orderBy('created_at', 'desc')->first()->tags()->attach($tags_id);
         return redirect(route('shops.index'));
     }
-    
-   
+    public function serch_tag_index(Request $request){
+        preg_match_all('/#([a-zA-Z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
+        $shops = [];
+      
+        // $matchの中でも#が付いていない方を使用する(配列番号で言うと1)
+        foreach($match[1] as $tag) {
+          // firstOrCreateで重複を防ぎながらタグを作成している。
+          $serch_result_shop = Tag::where(['name' => $tag])->get()[0]->shops;
+          array_push($shops, $serch_result_shop);
+        }
+          
+        return view('shops.index2',['shops'=>$shops[0]]);
+    }
     public function show($id){
         
        
@@ -208,13 +213,9 @@ class ShopsController extends Controller
            // $deletePath='public/uploads/'.$deletename;
            Storage::disk('s3')->delete($deletename);
            $shop->delete();
-           
-            
         }
-
         // 前のURLへリダイレクトさせる
         return back(); 
-   
     }
      public function narrow_down(Request $request){
         if($request->prefecture_id==0 && $request->shop_type==0){
@@ -239,7 +240,7 @@ class ShopsController extends Controller
         $prefecture_array=config('const.prefecture_array');
         
         $shop_type_array=config('const.shop_type_array');
-        return view('shops.index',
+        return view('shops.index2',
         ['shops'=>$shops,
          'prefecture_array'=>$prefecture_array,
          'shop_type_array'=>$shop_type_array,]);
