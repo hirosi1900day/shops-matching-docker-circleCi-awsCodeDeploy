@@ -29,7 +29,7 @@ li.right-side {
   text-align: center;
 }
 .chat_text_help{
-   background: #fff;
+  background: #fff;
   border-radius: 8px;
   padding:0 15px;
   max-width: 92%;
@@ -80,6 +80,8 @@ li.right-side {
 }
 .chat_form_group{
   position: fixed;
+  width: 98%;
+  text-align: center;
   bottom: 2px;
   left: 0;
 }

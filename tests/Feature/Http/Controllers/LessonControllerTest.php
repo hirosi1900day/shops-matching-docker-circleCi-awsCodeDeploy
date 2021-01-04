@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,12 +14,12 @@ class LessonControllerTest extends TestCase
      *
      * @return void
      */
+        use RefreshDatabase;
     public function testExample()
     {
-        $response = $this->get('/shops/index');
-
+        $response = $this->get('/');
+  
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSee('楽しいヨガレッスン');
-        $response->assertSee('×');
+        $response->assertJsonStructure(['shop_favorite', 'prefecture_array']); 
     }
 }

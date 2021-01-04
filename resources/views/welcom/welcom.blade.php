@@ -170,6 +170,7 @@
     <div class="footer-bar-bottom">
        <div>仕事のご依頼、お問い合わせemail</div> 
        <div>sugashi1900day@gmail.com</div>
+       <div class="center">&copySherSt</div>
     </div>
  </footer>
 </div>

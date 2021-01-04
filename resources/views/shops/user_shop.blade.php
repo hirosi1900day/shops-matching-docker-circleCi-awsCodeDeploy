@@ -28,7 +28,7 @@
             @foreach ($shops as $shop)
                 <div class="shops-index-container shadow">
                     <div class="text-title">店舗写真</div>
-            　     　<div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shop-image"></div>
+            　     　<div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image"></div>
                     <div class="text-title">店舗名</div>
                     <div class="text">{{$shop->name}}</div>
                     <div class="text-title">店舗都道府県</div>
