@@ -2,8 +2,6 @@
   /* 左右中央に置く */
   margin: 8px auto;
   text-align: center;
-
-  width: 90%;
   max-width: 1024px;
 }
 

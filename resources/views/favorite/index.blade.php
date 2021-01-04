@@ -2,7 +2,6 @@
 
 @section('content')
  <div class="background-skyblue">
-     
      @if(count($shops)>0)
          <h1>お気に入り店舗</h1>
          @foreach($shops as $shop)
@@ -17,13 +16,11 @@
                       </div>
                   </div> 
                   <div class="col-10 list-height">
-                      <a class="" href="{{route('shops.show',['shop'=>$shop->id])}}">
+                      <a class="text-decoration-none" href="{{route('shops.show',['shop'=>$shop->id])}}">
                           <div class="list-fontsize">{{$shop->name}}</div>
                       </a>
                   </div>
              </div>
-            
-             
          @endforeach
      @else
          <h1>お気に入り店舗がありません</h1>

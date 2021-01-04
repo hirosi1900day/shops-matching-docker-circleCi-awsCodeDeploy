@@ -2,11 +2,9 @@
 
 @section('content')
 <div class="background-skyblue">
-
     <h1>Myshop</h1>
-
     @if (count($shops) > 0)
-       <div class="row">
+        <div class="row">
             <aside class="col-sm-3">
                 <div class="card">
                     <div class="card-header">
@@ -15,13 +13,13 @@
                     <div class="card-body">
                     {{-- ユーザのメールアドレスをもとにGravatarを取得して表示 --}} 
                         @if($user->profile_image_location=='')
-                        <img class="user-profile-image" src="{{ Gravatar::get($user->email) }}" alt=""> 　　
+                            <img class="user-profile-image center" src="{{ secure_asset('/img/welcom-main-photo/human2.png') }}" alt="">
                         @else
-                        <img class="user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
+                            <img class="user-profile-image" src="{{Storage::disk('s3')->url($user->profile_image_location)}}" alt="">
                         @endif
                         <div>
                             <div class="text-title">自己紹介</div>
-                            <div class="text">{{$user->self_introduce}}</div>
+                            <div class="text">{!! nl2br(e($user->self_introduce)) !!}</div>
                         </div>
                     </div>
                 </div>
@@ -42,21 +40,21 @@
                     <div class="text-title">店舗種類</div>
                     <div class="text">{{$shop_type_array[$shop->shop_type]}}</div>
                     <div class="text-title">店舗紹介</div>
-                    <div class="text">{{$shop->shop_introduce}}</div>
+                    <div class="text">{!! nl2br(e($shop->shop_introduce)) !!}</div>
                     <div class="text-title">タグ</div>
                     @foreach($shop->tags()->get() as $shop_tag)
                     <div class="text">{{$shop_tag->name}}</div>
                     @endforeach
                 <div class="flex">
-                   <a href="{{route('shops.edit',['shop'=>$shop->id])}}" class="button">
+                    <a href="{{route('shops.edit',['shop'=>$shop->id])}}" class="button text-decoration-none">
                        <span class="button-text">店舗情報変更</span>
-                   </a>
-                   <a href="{{route('gallery.showGallerys',['id'=>$shop->id])}}" class="button">
+                    </a>
+                    <a href="{{route('gallery.showGallerys',['id'=>$shop->id])}}" class="button text-decoration-none">
                        <span class="button-text">写真ギャラリー</span>
-                   </a>
-                   <a href="{{route('chat.shop_index',['id'=>$shop->id])}}" class="button">
+                    </a>
+                    <a href="{{route('chat.shop_index',['id'=>$shop->id])}}" class="button text-decoration-none">
                        <span class="button-text">取引ユーザー一覧</span>
-                   </a>
+                    </a>
                
                  
                    {!! Form::model($shop, ['route' => ['shops.destroy', $shop->id], 'method' => 'delete']) !!}
@@ -65,13 +63,10 @@
                 </div>  
             </div>
              @endforeach
-            
-           
         </div>
     </div>
     @else
-    <h2>店舗がありません</h2>
-</div>            
+        <h2>店舗がありません</h2>
     @endif
-
+</div>            
 @endsection

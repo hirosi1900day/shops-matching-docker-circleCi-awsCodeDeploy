@@ -30,53 +30,46 @@
         {!! Form::submit('検索する',['class'=>'btn btn-info']) !!}
         {!! Form::close() !!}   
   <section>
-      
      <section class="swiper">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-
           <div class="swiper-slide slide01">
             <div class="slide-contents">
               <div class="slide-contents-title">
-                あなただけの1曲を。<br>
+                あなたの店舗をシェアしよう<br>
               </div>
               <div class="slide-contents-text">
-                世界中の楽曲をチェック。<br>
-                あの音楽が見つかる。<br>
+                店舗の空き時間をシェアしよう<br>
+                店舗稼働率をあげて売り上げを向上させよう<br>
               </div>
             </div> <!-- slide-contents -->
           </div> <!-- swiper-slide -->
-
           <div class="swiper-slide slide02">
             <div class="slide-contents">
               <div class="slide-contents-title">
-                音楽を共有しよう。<br>
+                店舗もサブスクの時代<br>
               </div>
               <div class="slide-contents-text">
-                気に入った楽曲をSNSで簡単にシェアできます。<br>
-                シェアを通して新しい音楽と出会おう。<br>
+                お気に入りの店舗を見つけてシェアしよう<br>
+                店舗を共同で経営し、経済の荒波を打ち破ろう！！<br>
               </div>
             </div> <!-- slide-contents -->
           </div> <!-- swiper-slide -->
         </div> <!-- swiper-wrapper -->
-
         <div class="swiper-button">
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
         </div> <!-- swiper-button -->
-
         <div class="swiper-pagination"></div>
       </div> <!-- swiper-container -->
     </section> <!-- swiper -->
-    
-        
  </section>
  <section id="middle">
  <p>募集</p>
  <div class="container-welcome-recruit">
     @foreach($recruits as $recruit)
         <div class="shops-index-container shadow">
-           <a href="{{route('recruit.show',['id'=>$recruit->id])}}">
+            <a href="{{route('recruit.show',['id'=>$recruit->id])}}">
                 <div>
                     <div class="text"><div>募集タイトル</div>{{substr($recruit->title,0,20)}}</div>
                     <div class="text"><div>募集内容</div>{{substr($recruit->content,0,20)}}</div>
@@ -84,21 +77,23 @@
                         <div class="text-left">
                             <p class="user-name center">{{ $recruit->user->name }}</p>
                             @if($recruit->user->profile_image_location=='')
-                                <img class="user-profile-image" src="{{ Gravatar::get($recruit->user->email) }}" alt="">
+                                <img class="user-profile-image center" src="{{ secure_asset('/img/welcom-main-photo/human2.png') }}" alt="">
                             @else
                                 <img class="user-profile-image" src="{{Storage::disk('s3')->url($recruit->user->profile_image_location)}}" alt="">
                             @endif
                         </div>
                     </div>
                 </div>
-           </a> 
+            </a> 
         </div>
     @endforeach
- </div> 
+ </div>
+ <a href="{{route('recruit.index')}}">
+    <span>もっと見る</span>
+ </a>
  <p>新着店舗</p>
  <div class="container-welcome">
- @foreach($shops_new as $shop)
-     
+    @foreach($shops_new as $shop)
         <div class="shops-index-container shadow">
            <a href="{{route('shops.show',['shop'=>$shop->id])}}">
                <div>
@@ -108,7 +103,7 @@
                         <div class="text-left">
                             <p class="user-name center">{{ $shop->user->name }}</p>
                             @if($shop->user->profile_image_location=='')
-                                <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                                <img class="user-profile-image center" src="{{ secure_asset('/img/welcom-main-photo/human2.png') }}" alt="">
                             @else
                                 <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
                             @endif
@@ -125,15 +120,16 @@
                 </div>
             </a>
         </div>
-     
- @endforeach
-    </div>
+    @endforeach
+ </div>
+ <a href="{{route('shops.index')}}">
+        <span class="text-right">もっと見る</span>
+ </a>
  <p>おすすめ店舗</p>
  <div class="container-welcome">
  @foreach($shop_favorite as $shop)
    <div class="shops-index-container shadow">
         <a href="{{route('shops.show',['shop'=>$shop->id])}}">
-               
             <div class="center"><img src="{{Storage::disk('s3')->url($shop->image_location)}}" class="shops-index-image shadow"></div>
             <div class="text"><div>ショップ情報</div>{{substr($shop->shop_introduce,0,20)}}</div>
             <div class="container-position">
@@ -141,7 +137,7 @@
                     <div class="text-left">
                         <p class="user-name center">{{ $shop->user->name }}</p>
                         @if($shop->user->profile_image_location=='')
-                            <img class="user-profile-image" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                            <img class="user-profile-image center" src="{{ secure_asset('/img/welcom-main-photo/human2.png') }}" alt="">
                         @else
                             <img class="user-profile-image" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
                         @endif
@@ -157,30 +153,26 @@
                 </div>
             </div>
         </a>
-        
     </div>
  @endforeach
  </div>
  <a href="{{route('chat.help_view')}}"><div class="footer-help-botton">ヘルプ</div></a>
  <div class="message-popup">操作方法で困った際は</br>
                             右側のヘルプボタンをクリックしよう！</br>
-                            </div>
+ </div>
  </section>
-    
  </div>
  <footer>
     <div class="footer-bar">
-        <div class=footer-title>あ��たの理想の店舗見つけて、</br>
-                             起業家になろう
-         </div>
-    <div>
-    <div class="footer-bottom">
-        &copy; 2020 shopmatching
+        <div class=footer-title>あなたの理想の店舗見つけて</div>
+        <div class=footer-title> 起業家になろう!!</div>
     </div>
-    
+    <div class="footer-bar-bottom">
+       <div>仕事のご依頼、お問い合わせemail</div> 
+       <div>sugashi1900day@gmail.com</div>
+    </div>
  </footer>
 </div>
-
    @include('loading')
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="{{ secure_asset('/js/loading.js') }}"></script>
@@ -200,7 +192,6 @@
         el: '.swiper-pagination', // ページネーションを表示する要素指定
       }
     });
-    
 　　</script>      
    </body>
 </html>

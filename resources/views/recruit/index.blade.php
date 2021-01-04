@@ -2,27 +2,28 @@
 
 @section('content')
 <div id="recruit_favorite">
-@foreach($recruits as $recruit)
-<div class="shops-index-container shadow">
-   <div>
-        @if($recruit->user->profile_image_location=='')
-            <img class="user-profile-image center" src="{{ Gravatar::get($recruit->user->email) }}" alt="">
-        @else
-            <img class="user-profile-image center" src="{{Storage::disk('s3')->url($recruit->user->profile_image_location)}}" alt="">
-        @endif
-    </div>
-   <div><div>募集タイトル</div>{{$recruit->title}}</div>
-   <div><div>募集内容</div>{{$recruit->content}}</div>
-   @if($recruit->user_id!=Auth::user()->id)
-      <like :recruit-id="{{$recruit->id}}"></like>
-   @endif
-</div>
-@endforeach
+    @foreach($recruits as $recruit)
+        <div class="shops-index-container shadow">
+            <div>
+                @if($recruit->user->profile_image_location=='')
+                    <img class="user-profile-image center" src="{{ Gravatar::get($recruit->user->email) }}" alt="">
+                @else
+                    <img class="user-profile-image center" src="{{Storage::disk('s3')->url($recruit->user->profile_image_location)}}" alt="">
+                @endif
+            </div>
+            <div><div>募集タイトル</div>{{$recruit->title}}</div>
+            <div><div>募集内容</div>{{$recruit->content}}</div>
+            @if($recruit->user_id!=Auth::user()->id)
+                <like :recruit-id="{{$recruit->id}}"></like>
+                <div><a class="text-decoration-none button" href="{{route('recruit.show',['id' => $recruit->id])}}">
+                    詳細へ
+                </a></div>
+            @endif
+        </div>
+    @endforeach
 </div>
 <script src="/js/app.js"></script>
-
 <script>
-  
   const buttonRecruit = {
   template: `
     <div>
@@ -82,8 +83,5 @@ new Vue({
     'like': buttonRecruit,
   },
 });
-
 </script>
-
-
 @endsection

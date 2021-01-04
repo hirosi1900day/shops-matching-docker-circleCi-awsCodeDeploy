@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-
     protected $fillable = ['name','tags_id'];
     public function shops()
    {

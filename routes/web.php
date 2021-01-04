@@ -15,8 +15,6 @@ Route::get('/','ShopsController@welcom');
 //help_chat
 Route::post('chat/store_help', 'ChatController@store_help');
 Route::get('chat/help_view', 'ChatController@help_view')->name('chat.help_view');
-
-
 //ユーザー登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
@@ -64,8 +62,6 @@ Route::post('recruit/{id}/match', 'RecruitController@recruit_match')->name('recr
 Route::delete('recruit/{id}/match_delete', 'RecruitController@match_delete')->name('recruit.match_delete');
 Route::get('recruit/{id}/match_index', 'RecruitController@match_index')->name('recruit.match_index');
 Route::get('recruit/{id}/match_check', 'RecruitController@match_check');
-
-
 });
 
 

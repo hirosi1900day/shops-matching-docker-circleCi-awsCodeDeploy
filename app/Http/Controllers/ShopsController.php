@@ -11,27 +11,23 @@ use Illuminate\Support\Facades\Storage;
 class ShopsController extends Controller
 {
     
-     public function welcom(){
-         $shops_new=Shop::orderBy('created_at','desc')->limit(4)->get();
-         $shop_favorite=Shop::withCount('favorite_users')->orderBy('favorite_users_count', 'desc')
-         ->limit(4)
-         ->get();
-         $recruits=Recruit::orderBy('created_at','desc')->limit(4)->get();
- 
-         $prefecture_array=config('const.prefecture_array');
-        
-         $shop_type_array=config('const.shop_type_array');
-        
-         
-         return view('welcom.welcom',['shops_new'=>$shops_new,
-                 'shop_favorite'=>$shop_favorite,
-                 'prefecture_array'=>$prefecture_array,
-                 'shop_type_array'=> $shop_type_array,
-                 'recruits'=>$recruits,
-             ]);
+    public function welcom(){
+        $shops_new=Shop::orderBy('created_at','desc')->limit(4)->get();
+        $shop_favorite=Shop::withCount('favorite_users')->orderBy('favorite_users_count', 'desc')
+        ->limit(4)
+        ->get();
+        $recruits=Recruit::orderBy('created_at','desc')->limit(4)->get();
+        $prefecture_array=config('const.prefecture_array');
+        $shop_type_array=config('const.shop_type_array');
+        return view('welcom.welcom',['shops_new'=>$shops_new,
+                    'shop_favorite'=>$shop_favorite,
+                    'prefecture_array'=>$prefecture_array,
+                    'shop_type_array'=> $shop_type_array,
+                    'recruits'=>$recruits,
+                     ]);
      }
-     public function index(){
-        $shops = Shop::orderBy('created_at','desc')->get();
+    public function index(){
+        $shops = Shop::orderBy('created_at','desc')->paginate(10);
           // メッセージ一覧ビューでそれを表示
         return view('shops.index2', [
             'shops' => $shops
@@ -50,7 +46,7 @@ class ShopsController extends Controller
         'free_time'=>['required','string','max:255'],
         'shop_type'=>['required'],
         'shop_introduce'=>['required','string','max:255'],
-        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048','required',],
+        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:600','required',],
         
        ]);
        
@@ -72,46 +68,46 @@ class ShopsController extends Controller
         'shop_introduce'=>$request->shop_introduce,
    ]);
       
-      preg_match_all('/#([a-zA-Z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
-      $tags = [];
+        preg_match_all('/#([a-zA-Z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
+        $tags = [];
       
-      // $matchの中でも#が付いていない方を使用する(配列番号で言うと1)
-      foreach($match[1] as $tag) {
-          // firstOrCreateで重複を防ぎながらタグを作成している。
-          $record = Tag::firstOrCreate(['name' => $tag]);
-          array_push($tags, $record);
+        // $matchの中でも#が付いていない方を使用する(配列番号で言うと1)
+    foreach($match[1] as $tag) {
+        // firstOrCreateで重複を防ぎながらタグを作成している。
+        $record = Tag::firstOrCreate(['name' => $tag]);
+        array_push($tags, $record);
       }
 
-      $tags_id = [];
-      foreach($tags as $tag) {
-          array_push($tags_id, $tag->id);
+        $tags_id = [];
+    foreach($tags as $tag) {
+         array_push($tags_id, $tag->id);
       }
-        $request->user()->shops()->orderBy('created_at', 'desc')->first()->tags()->attach($tags_id);
-        return redirect(route('shops.index'));
+         $request->user()->shops()->orderBy('created_at', 'desc')->first()->tags()->attach($tags_id);
+         return redirect(route('shops.index'));
     }
     public function serch_tag_index(Request $request){
         preg_match_all('/#([a-zA-Z0-9０-９ぁ-んァ-ヶ亜-熙]+)/u', $request->tags, $match);
         $shops = [];
-      
-        // $matchの中でも#が付いていない方を使用する(配列番号で言うと1)
+       
+         // $matchの中でも#が付いていない方を使用する(配列番号で言うと1)
         foreach($match[1] as $tag) {
-          // firstOrCreateで重複を防ぎながらタグを作成している。
-          $serch_result_shop = Tag::where(['name' => $tag])->get()[0]->shops;
-          array_push($shops, $serch_result_shop);
-        }
+              // firstOrCreateで重複を防ぎながらタグを作成している。
+             $serch_result_shop = Tag::where(['name' => $tag])->get()[0]->shops;
+              array_push($shops, $serch_result_shop);
+         }
           
         return view('shops.index2',['shops'=>$shops[0]]);
     }
     public function show($id){
         
        
-         $shop = Shop::findOrFail($id);
-         $path = Storage::disk('s3')->url($shop->image_location);
-         $prefecture_array=config('const.prefecture_array');
-         $shop_type_array=config('const.shop_type_array');
+        $shop = Shop::findOrFail($id);
+        $path = Storage::disk('s3')->url($shop->image_location);
+        $prefecture_array=config('const.prefecture_array');
+        $shop_type_array=config('const.shop_type_array');
         
          // メッセージ詳細ビューでそれを表示
-         return view('shops.show', [
+        return view('shops.show', [
             'shop' => $shop,
             'prefecture_array'=>$prefecture_array,
             'shop_type_array'=>$shop_type_array,
@@ -126,14 +122,9 @@ class ShopsController extends Controller
             // 認証済みユーザを取得
             $user = \Auth::user();
             // ユーザのshopの一覧を作成日時の降順で取得
-            
-        
             $shops = $user->shops()->orderBy('created_at', 'desc')->get();
-           
             $prefecture_array=config('const.prefecture_array');
-        
             $shop_type_array=config('const.shop_type_array');
-            
             $data = [
                 'user' => $user,
                 'shops' => $shops,
@@ -141,26 +132,21 @@ class ShopsController extends Controller
                 'shop_type_array'=>$shop_type_array,
             ];
             return view('shops.user_shop',$data);
-        
         }
-   
      }
-    
     public function edit($id){
-        
         // idの値でshopを検索して取得
         $shop = Shop::findOrFail($id);
         // メッセージ編集ビューでそれを表示
         return view('shops.edit', [
             'shop' => $shop,
         ]);
-        
     }
     public function update(Request $request, $id){
         $shop = Shop::findOrFail($id);
         $request->validate([
         'name'=>['string','max:255'],
-        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048'],
+        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:600'],
        ]);
      if($file = $request->image_location){
       
@@ -209,15 +195,15 @@ class ShopsController extends Controller
        
         // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
         if (\Auth::id() == $shop->user_id) {
-           $deletename=$shop->image_location;
-           // $deletePath='public/uploads/'.$deletename;
-           Storage::disk('s3')->delete($deletename);
-           $shop->delete();
+            $deletename=$shop->image_location;
+            // $deletePath='public/uploads/'.$deletename;
+            Storage::disk('s3')->delete($deletename);
+            $shop->delete();
         }
         // 前のURLへリダイレクトさせる
         return back(); 
     }
-     public function narrow_down(Request $request){
+    public function narrow_down(Request $request){
         if($request->prefecture_id==0 && $request->shop_type==0){
             $shops=Shop::all();
         }elseif($request->prefecture_id==0){
@@ -234,16 +220,13 @@ class ShopsController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get();
         }
- 
-       
-                    
         $prefecture_array=config('const.prefecture_array');
-        
         $shop_type_array=config('const.shop_type_array');
         return view('shops.index2',
         ['shops'=>$shops,
          'prefecture_array'=>$prefecture_array,
-         'shop_type_array'=>$shop_type_array,]);
+         'shop_type_array'=>$shop_type_array,
+        ]);
     }
      
 

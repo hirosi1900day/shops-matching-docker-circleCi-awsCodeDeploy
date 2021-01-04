@@ -51,15 +51,12 @@ class RecruitController extends Controller
         //idはrecruit id
         $recruit=Recruit::findOrFail($id);
         $recruit_user_ids=$recruit->users()->get()->pluck('id');
-       
-        
         $shops=[];
         foreach($recruit_user_ids as $user_id){
             $shop=User::findOrFail($user_id)->shops()->get();
              array_push($shops,$shop);
         }
-        return ;
-        // view('recruit.match_index',['shops'=>$shops]);
+        return view('recruit.match_index',['shops'=>$shops]);
         
     }
     

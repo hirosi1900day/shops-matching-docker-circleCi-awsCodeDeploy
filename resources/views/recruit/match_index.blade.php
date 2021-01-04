@@ -14,7 +14,7 @@
                 <div class="form-name">店舗の種類</div><div class="text">{{ config('const.prefecture_array')[$shop->shop_type]}}</div>
                 @if($shop->user_id!=Auth::user()->id)
                     <div class="flex-favorite">
-                        <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
+                        <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button text-decoration-none">
                             <span>店舗情報詳細へ</span>
                         </a>
                         <like :shop-id="{{$shop->id}}" class="favorite"></like>

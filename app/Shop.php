@@ -8,14 +8,11 @@ class Shop extends Model
 {
     protected $fillable = ['name','shop_introduce','image_location','free_time','shop_location',
     'shop_location_prefecture','shop_type'];
-
     public function user(){
         return $this->belongsTo(User::class);
     }
-    
     public function shop_chatmessages(){
         return $this->hasMany(Chatmessage::class);
-        
     }
     public function gallerys()
     {
@@ -27,7 +24,6 @@ class Shop extends Model
     }
     public function tags()
    {
-       return $this->belongsToMany(Tag::class, 'shop_tags','shop_id','tag_id')->withTimestamps();
+         return $this->belongsToMany(Tag::class, 'shop_tags','shop_id','tag_id')->withTimestamps();
    }
-    
 }

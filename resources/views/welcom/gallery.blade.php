@@ -1,5 +1,4 @@
 
-
 <section id="section_gallery">
     <section id="gallery" class="gallery">
         <div class="image-gallery animated">

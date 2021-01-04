@@ -6,8 +6,8 @@
       <div class="container-fluid">
 
         <!-- ホームリンク -->
-        <a href="#" class="navbar-brand" aria-label="ホーム">
-          <i class="fas fa-paw" aria-hidden="true"></i>
+        <a href="/" class="navbar-brand" aria-label="ホーム">
+           <img class="logo center" src="{{ secure_asset('/img/welcom-main-photo/logo_new.png') }}" alt="">
         </a>
 
         <!-- 画面幅が狭い時に表示されるハンバーガーメニュー -->
@@ -30,41 +30,41 @@
               <a class="nav-link" href="{{route('shops.create')}}">ショップ作成</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('chat.help_view')}}">ヘルプぼっと</a>
+              <a class="nav-link" href="{{route('chat.help_view')}}">ヘルプBot</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('mypage.shop')}}">Myshop</a>
+              <a class="nav-link" href="{{route('mypage.shop')}}">マイショップ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('shops.index')}}">ショップ一蘭</a>
+              <a class="nav-link" href="{{route('shops.index')}}">ショップ一覧</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('favorites.index')}}">お気に入り一覧</a>
+                <a class="nav-link" href="{{route('favorites.index')}}">お気に入りしたショップ一覧</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('chat.user_index')}}">取引メッセージ</a>
+                <a class="nav-link" href="{{route('chat.user_index')}}">取引メッセージユーザー</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('recruit.create')}}">募集作成</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('recruit.user_show')}}">Myrecruit</a>
+                <a class="nav-link" href="{{route('recruit.user_show')}}">マイ募集</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('recruit.index')}}">募集一覧</a>
+                <a class="nav-link" href="{{route('recruit.index')}}">募集一覧へ</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('logout.get')}}">Logout</a>
+                <a class="nav-link" href="{{route('logout.get')}}">ログアウト</a>
             </li>
             @else
              <li class="nav-item">
-                <a class="nav-link" href="{{route('signup.get')}}">signup</a>
+                <a class="nav-link" href="{{route('signup.get')}}">会員登録</a>
             </li>
              <li class="nav-item">
-                <a class="nav-link" href="{{route('login')}}">login</a>
+                <a class="nav-link" href="{{route('login')}}">ログイン</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('chat.help_view')}}">ヘルプぼっと</a>
+              <a class="nav-link" href="{{route('chat.help_view')}}">ヘルプBot</a>
             </li>
             @endif
           </ul>

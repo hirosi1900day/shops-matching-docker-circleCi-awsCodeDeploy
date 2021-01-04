@@ -15,12 +15,9 @@ class GallerysController extends Controller
         return view('gallery.create',['shop'=>$shop]);
     }
     public function store(Request $request,$id){
-      
         $request->validate([
-        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:2048'],
-        $request->validate([
-            'image_location' => 'required']),
-      ]);
+        'image_location'=>['file','mimes:jpeg,png,jpg,bmb','max:600','required']
+         ]);
        if($file = $request->image_location){
         //保存するファイルに名前をつける    
         $fileName = time().'.'.$file->getClientOriginalExtension();

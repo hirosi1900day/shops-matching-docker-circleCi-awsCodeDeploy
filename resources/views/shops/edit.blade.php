@@ -43,5 +43,4 @@
         {!! Form::submit('更新する',['class'=>'btn btn-info']) !!}
         {!! Form::close() !!}  
 </div>
-
 @endsection

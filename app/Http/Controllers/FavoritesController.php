@@ -19,8 +19,6 @@ class FavoritesController extends Controller
         \Auth::user()->unfavorite($id);
         // 前のURLへリダイレクトさせる
        return;
-    //   redirect(route('shops.index'));
-        
     }
     public function index(){
         $shops=Auth::user()->favorites()->get();
@@ -28,7 +26,6 @@ class FavoritesController extends Controller
     }
     public function like_check($id){
         $result=(string)\Auth::user()->is_favorite($id);
-        
         return $result;
     }
 

@@ -40,7 +40,6 @@ class User extends Authenticatable
     public function shops(){
         return $this->hasMany(Shop::class);
     }
-    
     public function message_chatrooms(){
         return $this->belongsToMany(Chatroom::class,'chatmessges','user_id','chatroom_id');
     }
@@ -100,7 +99,6 @@ class User extends Authenticatable
     }
     public function recruit_match_delete($recruitId){
         $exist = $this->is_recruiting($recruitId);
-        
         if ($exist) {
             // すでにフォローしていればフォローを外す
             $this->recruits()->detach($recruitId);

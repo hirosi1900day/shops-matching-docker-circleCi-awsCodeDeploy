@@ -1,14 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
 <div class="background-skyblue">
     <h1>shop一覧</h1>
   <div>
     {!! Form::open(['route'=>'shops.narrow_down']) !!}
-   
     <div class='form-group'>
         {!! Form::label('prefecture_id', '都道府県') !!}
         {!! Form::select('prefecture_id',['選択してください','北海道','青森','岩手','宮城','秋田','山形','福島',
@@ -16,7 +12,6 @@
         '静岡','愛知','三重','滋賀','京都','大阪','兵庫','奈良','和歌山','鳥取','島根','岡山','広島','山口','徳島',
         '香川','愛媛','高知','福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄',],0,['class'=>'form-control']) !!}
     </div>
-    
     <div class='form-group'>
         {!! Form::label('shop_type_id', '店舗ジャンル') !!}
         {!! Form::select('shop_type',['選択してください','居酒屋','カフェ',
@@ -35,7 +30,7 @@
        <div class="shops-index-container shadow">
             <div>
                 @if($shop->user->profile_image_location=='')
-                    <img class="user-profile-image center" src="{{ Gravatar::get($shop->user->email) }}" alt="">
+                    <img class="user-profile-image center" src="{{ secure_asset('/img/welcom-main-photo/human2.png') }}" alt="">
                 @else
                     <img class="user-profile-image center" src="{{Storage::disk('s3')->url($shop->user->profile_image_location)}}" alt="">
                 @endif
@@ -51,10 +46,10 @@
                 
                     @if($shop->user_id!=Auth::user()->id)
                         <div class="flex-favorite">
-                           <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button">
+                           <a href="{{route('shops.show',['shop'=>$shop->id])}}" class="button text-decoration-none">
                               <span>店舗情報詳細へ</span>
                            </a>
-                           <a href="{{route('chat.create_chatroom',['id'=>$shop->id])}}" class="button">
+                           <a href="{{route('chat.create_chatroom',['id'=>$shop->id])}}" class="button text-decoration-none">
                                <span>メッセージへ</span>
         　                  </a>
                            <like :shop-id="{{$shop->id}}"></like>
@@ -66,10 +61,10 @@
     
        </div>        
     @endforeach 
-   
     @else
     <div>店舗がありません</div>
     @endif
+    <div class="margin">{{ $shops->links() }}</div>
 </div>
 <script src="/js/app.js"></script>
 <script>
@@ -140,6 +135,4 @@ new Vue({
 });
 
 </script>
-    
-
 @endsection
