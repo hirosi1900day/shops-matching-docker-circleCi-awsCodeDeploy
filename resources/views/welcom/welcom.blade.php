@@ -55,6 +55,18 @@
               </div>
             </div> <!-- slide-contents -->
           </div> <!-- swiper-slide -->
+          <div class="swiper-slide slide03">
+            <div class="slide-contents">
+              <div class="slide-contents-title">
+                サービス説明<br>
+              </div>
+              <div class="slide-contents-text">
+                このサービスは店舗の未稼働時間を他のユーザーに店舗を貸し出すことで<br>
+                店舗稼働率を上げて収益率をあげることを目的としたサービスです。<br>
+                あなたの店舗も参加してみませんか？
+              </div>
+            </div> <!-- slide-contents -->
+          </div> <!-- swiper-slide -->
         </div> <!-- swiper-wrapper -->
         <div class="swiper-button">
           <div class="swiper-button-prev"></div>

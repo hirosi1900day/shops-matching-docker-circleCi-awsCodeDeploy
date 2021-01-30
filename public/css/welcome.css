@@ -41,6 +41,11 @@ body{
     background-size: cover;
     background-position: center;
 }
+.slide03 {
+    background: url(/img/welcom-main-photo/cafe.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 .swiper-button {
     position: absolute;
     z-index: 10;
@@ -117,7 +122,6 @@ body{
 .text{
     padding:0;
     font-size:6px;
- 
 }
 .padding{
     padding:3px;
