@@ -29,7 +29,7 @@
         {!! Form::select('shop_type',config('const.shop_type_array'),0,['class'=>'form-control']) !!}
     </div>
     <div class='form-group'>
-        {!! Form::label('image_location','店舗写真(600KBまで可能)' !!}
+        {!! Form::label('image_location','店舗写真(600KBまで可能)') !!}
         {!! Form::file('image_location') !!}
     </div>
     <div class='form-group'>
