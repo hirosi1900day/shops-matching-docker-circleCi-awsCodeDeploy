@@ -73,7 +73,7 @@
   template: `
     <div>
        <div v-if="status == false" type="button" @click.prevent="like" class="button"><div>気になる</div></div>
-       <div v-else type="button" @click.prevent="unlike" class="button-delete"><div>気になるを解除する</div></div>
+       <div v-else type="button" @click.prevent="unlike" class="button-delete"><div>気になるを解除</div></div>
     </div>
   `,
   props: ['shopId'],  
