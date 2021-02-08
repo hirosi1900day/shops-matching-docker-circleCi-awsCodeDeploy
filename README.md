@@ -4,10 +4,10 @@
 &emsp;本サービスは、店舗の空き時間（営業時間外、定休日）を他のユーザーにレンタルすることにより</br>
 &emsp;店舗稼働率を上げることを目的としたサービスです。</br>
 &emsp;主な機能</br>
-&emsp;&emsp;・店舗掲載</br>
-&emsp;&emsp;・店舗募集機能</br>
-&emsp;&emsp;・チャット機能</br>
-&emsp;&emsp;・googleマップAPI</br>
+&emsp;・店舗掲載</br>
+&emsp;・店舗募集機能</br>
+&emsp;・チャット機能</br>
+&emsp;・googleマップAPI</br>
 ・使用言語：language</br>
 &emsp;・laravel(php):約90%</br>
 &emsp;・vue.js(javascript):約10% (主に非同期処理で使用）</br>
