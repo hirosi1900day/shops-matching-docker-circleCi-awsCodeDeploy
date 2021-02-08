@@ -1,3 +1,22 @@
+・リポジトリ（Webアプリ）の名前：Name</br>
+&emsp;sheraSt</br>
+・概要：Overview</br>
+&emsp;本サービスは、店舗の空き時間（営業時間外、定休日）を他のユーザーにレンタルすることにより</br>
+&emsp;店舗稼働率を上げることを目的としたサービスです。
+&emsp;主な機能</br>
+&emsp;&emsp;・店舗掲載</br>
+&emsp;&emsp;・店舗募集機能</br>
+&emsp;&emsp;・チャット機能</br>
+&emsp;&emsp;・googleマップAPI</br>
+・使用言語：language</br>
+&emsp;・laravel(php):約90%</br>
+&emsp;・vue.js(javascript):約10% (主に非同期処理で使用）</br>
+・使用外部サービス</br>
+&emsp;・aws:S3</br>
+&emsp;・heroku(ユーザー訪問数、サービス内の機能上のサーバーへの負荷はそこまで大きくないと判断し、</br>
+&emsp;コスト面を考えawsではなくherokuをサーバーとして</br>
+&emsp;選択した）</br>
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
